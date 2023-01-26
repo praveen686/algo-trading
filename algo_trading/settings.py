@@ -82,7 +82,10 @@ DATABASES = {
         'PASSWORD': 'pwd_d3v_l0c4lh0st',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
+        'TEST': {
+            'NAME': 'test_algo_trading',
+        },
+    },
 }
 
 

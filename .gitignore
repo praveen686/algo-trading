@@ -6,3 +6,8 @@
 
 # PyCharm files
 *.pyc
+
+# Django Cache files
+**/__pycache__/*
+
+__pycache__/*

@@ -21,5 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Instrument
-    path('instruments/add', views.AddInstrumentView.as_view(), name='add-instrument')
+    path('instruments/add', views.InstrumentAddView.as_view(), name='add-instrument')
 ]

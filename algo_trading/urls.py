@@ -15,11 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from . import views
 
 urlpatterns = [
     path('polls/', include('polls.urls')),
     path('admin/', admin.site.urls),
 
     # Instrument
-    path('instruments/add', views.InstrumentAddView.as_view(), name='add-instrument')
+    path('instruments/<int:pk>', views.instrument_by_pk, name='instrument'),
+    path('instruments/<str:symbol>', views.instrument_by_symbol, name='instrument-symbol'),
 ]

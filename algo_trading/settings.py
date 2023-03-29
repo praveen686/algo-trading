@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['algo-trading-dev.ap-south-1.elasticbeanstalk.com', 'localhost'
 # Application definition
 
 INSTALLED_APPS = [
+    'algo_trading',
     'polls.apps.PollsConfig',
     'django.contrib.admin',
     'django.contrib.auth',

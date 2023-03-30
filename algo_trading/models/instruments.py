@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+from .managers import InstrumentManager
+
 
 class Instrument(models.Model):
     symbol = models.CharField(max_length=20, db_index=True, unique=True)
@@ -38,3 +40,4 @@ class Instrument(models.Model):
         return (reverse('instrument-symbol', args=[self.symbol]))
 
     # TODO: Define custom methods here
+    objects = InstrumentManager()

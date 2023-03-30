@@ -1,0 +1,6 @@
+<form action={% url "add-instrument" %} method="POST">
+  {% csrf_token %}
+  <h3>Enter one or more symbols that you wan't to import</h3>
+  {{ form.as_p }}
+  <input type="Submit" name="add" value="Fetch &amp; Validate Symbol" />
+</form>

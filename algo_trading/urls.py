@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # Instrument
-    path('instruments/<int:pk>', views.instrument_by_pk, name='instrument'),
-    path('instruments/<str:symbol>', views.instrument_by_symbol, name='instrument-symbol'),
+    path('instruments/show/<int:pk>', views.instrument_by_pk, name='instrument'),
+    path('instruments/show/<str:symbol>', views.instrument_by_symbol, name='instrument-symbol'),
+    path('instruments/add', views.add_instruments, name='add-instrument'),
 ]

@@ -4,6 +4,7 @@ from django.views.decorators.http import require_http_methods
 from ..models import Instrument
 
 from ..forms import AddInstrumentForm
+from ..exceptions import InvalidTickerSymbolError
 
 
 @require_http_methods(["GET"])
@@ -40,7 +41,9 @@ def add_instruments(request):
         form = AddInstrumentForm(request.POST)
 
         if form.is_valid():
-            return attempt_add_new_instrument(form)
+            new_instrument = attempt_add_new_instrument(form)
+            if new_instrument is not None:
+                return redirect(new_instrument)
     else:
         form = AddInstrumentForm()
 
@@ -48,8 +51,11 @@ def add_instruments(request):
 
 
 def attempt_add_new_instrument(form):
-    requested_symbol = form.cleaned_data['symbol']
-    # try:
-    #     Instrument.process_new_instrument(requested_symbol)
-    # except ImportError:
-    #     form.error_messages = 'The requested symbol is invalid'
+    try:
+        new_instrument = Instrument.objects.process_new_instrument(form.cleaned_data['symbol'])
+        Instrument.objects.download_historical_data([new_instrument])
+        return new_instrument
+    except InvalidTickerSymbolError:
+        form.add_error('symbol', 'The requested symbol is invalid. No ticker info found.')
+    except Exception as exception:
+        form.add_error(None, exception.args)

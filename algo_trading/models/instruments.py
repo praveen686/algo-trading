@@ -10,7 +10,7 @@ class Instrument(models.Model):
     first_open_date = models.DateField("instrument first traded date", default=None, null=True, blank=True)
 
     class InstrumentType(models.TextChoices):
-        STOCK = 'ST', 'Stock'
+        EQUITY = 'EQ', 'Equity'
         FUTURES = 'FT', 'Futures'
         OPTIONS = 'OT', 'Options'
         INDEX = 'IX', 'Index'
@@ -23,7 +23,7 @@ class Instrument(models.Model):
     instrument_type = models.CharField(
        max_length=2,
        choices=InstrumentType.choices,
-       default=InstrumentType.STOCK,
+       default=InstrumentType.EQUITY,
     )
 
     class Meta:
@@ -32,9 +32,6 @@ class Instrument(models.Model):
 
     def __str__(self):
         return self.descriptive_name
-
-    # def save(self):
-    #     pass
 
     def get_absolute_url(self):
         return (reverse('instrument-symbol', args=[self.symbol]))

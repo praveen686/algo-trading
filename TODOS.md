@@ -5,3 +5,7 @@ This is a running list of all the todos that are to be done once the basic funct
 - [ ] Move all instrument code, including model, views, URLs into its own app
 - [ ] Add namespace to urls
 - [ ] Add namespace wherever URLs are being generated
+
+
+### View related
+- [ ] Make internal methods of views as private, so that only view methods can call them

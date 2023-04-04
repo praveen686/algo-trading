@@ -30,6 +30,13 @@ class Instrument(models.Model):
         verbose_name = "Instrument"
         verbose_name_plural = "Instruments"
 
+        indexes = [
+            models.Index(fields=['symbol'], name="instrument_symbol_idx"),
+            models.Index(fields=['instrument_type'], name="instrument_instrument_type_idx"),
+        ]
+
+        get_latest_by = "id"
+
     def __str__(self):
         return self.descriptive_name
 

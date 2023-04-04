@@ -2,6 +2,7 @@ import datetime
 
 from django.db import models
 import yfinance as yf
+import pandas as pd
 
 from ...exceptions import InvalidTickerSymbolError
 
@@ -108,3 +109,12 @@ class InstrumentManager(models.Manager):
 
         # TODO: allow range/interval to be passed as an arg to indicate the frequency at which
         # data is desired. Currently one 1d interval is supported.
+        # ticker = yf.Ticker(instrument.symbol)
+        # ohlcv_df = ticker.history(
+        #     start=instrument.first_open_date,
+        # )
+        # make_django_records_from_df(
+        #     df=ohlcv_df.reset_index().dropna(how='any'),
+        #     model=self.model.ohlcv_data_daily,
+        # )
+

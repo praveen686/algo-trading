@@ -97,7 +97,7 @@ def attempt_add_new_instrument(form: AddInstrumentForm) -> Instrument:
 
     try:
         new_instrument = Instrument.objects.process_new_instrument(form.cleaned_data['symbol'])
-        Instrument.objects.download_historical_data([new_instrument])
+        Instrument.objects.download_historical_data(new_instrument)
         return new_instrument
     except InvalidTickerSymbolError:
         form.add_error('symbol', 'The requested symbol is invalid. No ticker info found.')

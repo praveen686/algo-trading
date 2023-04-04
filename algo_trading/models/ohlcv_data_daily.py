@@ -16,24 +16,6 @@ class OhlcvDataDaily(models.Model):
     # Set default for now, until we get this from zerodha APIs
     last_price = models.DecimalField("last price", max_digits=15, decimal_places=5, default=0.0)
 
-    # volume = models.IntegerField("trade volume", null=True, blank=True)
-    # dividends = models.DecimalField(
-    #     "dividends",
-    #     max_digits=8,
-    #     decimal_places=2,
-    #     default=0.0,
-    #     null=True,
-    #     blank=True,
-    # )
-    # splits = models.DecimalField(
-    #     "splits",
-    #     max_digits=8,
-    #     decimal_places=2,
-    #     default=0.0,
-    #     null=True,
-    #     blank=True,
-    # )
-
     # Refers to the instrument to which this daily data set belongs to.
     # Renames the related_name on `instrument` as `daily_data`, resulting in the following methods:
     # ```
@@ -72,6 +54,7 @@ class OhlcvDataDaily(models.Model):
 
         get_latest_by = "date"  # should it be -date?, check when we have data
 
+        # THIS IS NOT WORKING, CHECK AGAIN
         # Adds `instrument.get_ohlcv_data_daily_order(), instrument.set_ohlcv_data_daily_order()`
         # to Instrument class' instances.
         # Adds `ohlcv_data_daily.get_next_in_order(), ohlcv_data_daily.get_previous_in_order()` to
@@ -79,10 +62,10 @@ class OhlcvDataDaily(models.Model):
         # This implicitly sets the `ordering` field.
         #
         # WARN: DON'T USE ORDERING AGAIN IN THIS MODEL
-        order_with_respect_to = "instrument"
+        # order_with_respect_to = "instrument_id"
 
     def __str__(self):
-        self.date
+        return str(self.date)
 
     def get_absolute_url(self):
         return ('')

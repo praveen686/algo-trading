@@ -4,6 +4,7 @@ from django.db import models
 import yfinance as yf
 import pandas as pd
 
+# from ...models import OhlcvDataDaily
 from ...exceptions import InvalidTickerSymbolError
 
 
@@ -117,10 +118,19 @@ class InstrumentManager(models.Manager):
         # This DF may have rows with empty values in some columns, dropping rows with any NaN's.
         # This DF has the date as the index, which we need to capture as a column for each entry
         # So we need to reset the index on the DF.
-        ohlcv_df.reset_index().dropna(how='any')
+        ohlcv_df = ohlcv_df.reset_index().dropna(how='any')
+        ohlcv_df = ohlcv_df.drop(["Volume", "Dividends", "Stock Splits"], axis=1)
+        ohlc_df = ohlcv_df.rename(columns={
+            "Date": "date",
+            "Open": "open",
+            "High": "high",
+            "Low": "low",
+            "Close": "close",
+        })
+        ohlc_df['date'] = pd.to_datetime(ohlc_df['date']).apply(lambda x: x.to_pydatetime())
+        ohlc_df['instrument_id'] = instrument.id
 
-        make_django_records_from_df(
-            df=ohlcv_df,
-            model=self.model.ohlcv_data_daily,
+        ohlc_model = self.model.daily_data.rel.related_model
+        instrument.daily_data.bulk_create(
+            ohlc_model(**vals) for vals in ohlc_df.to_dict('records')
         )
-

@@ -70,7 +70,7 @@ class InstrumentManager(models.Manager):
         ----------
         info: dict
             A dictionary containing all the info about the stock as obtained from yfinance API.
-            Sample file is at `collectibles/yf_ticker_info_for_symbol.json
+            Sample file is at `collectibles/yf_ticker_info_for_symbol.json`
 
         Returns
         -------

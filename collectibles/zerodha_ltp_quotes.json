@@ -1,0 +1,11 @@
+// https://kite.trade/docs/connect/v3/market-quotes/#retrieving-ltp-quotes
+
+{
+    "status": "success",
+    "data": {
+        "NSE:INFY": {
+            "instrument_token": 408065,
+            "last_price": 1074.35
+        }
+    }
+}

@@ -26,6 +26,17 @@ class Instrument(models.Model):
        default=InstrumentType.EQUITY,
     )
 
+    # fields to store Zerodha-specific info. All fields are defaulted to empty string since
+    # we won't know these until these are queried from Zerodha.
+    # @TODO:
+    #   Remove this default and make non-nullable once instrument is ingested fully from Zerodha
+    zerodha_instrument_token = models.IntegerField("zerodha instrument token", default=0)
+    zerodha_exchange_token = models.CharField("zerodha exchange token", max_length=50, default='')
+    zerodha_lot_size = models.IntegerField("zerodha lot size", default=0)
+    zerodha_segment = models.CharField("zerodha segment", max_length=50, default='')
+    zerodha_exchange = models.CharField("zerdoha exchange", max_length=50, default='')
+    zerodha_trading_symbol = models.CharField("zerodha trading symbol", max_length=50, default='')
+
     class Meta:
         verbose_name = "Instrument"
         verbose_name_plural = "Instruments"

@@ -4,7 +4,6 @@ from django.db import models
 import yfinance as yf
 import pandas as pd
 
-# from ...models import OhlcvDataDaily
 from ...exceptions import InvalidTickerSymbolError
 
 

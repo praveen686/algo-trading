@@ -109,12 +109,18 @@ class InstrumentManager(models.Manager):
 
         # TODO: allow range/interval to be passed as an arg to indicate the frequency at which
         # data is desired. Currently one 1d interval is supported.
-        # ticker = yf.Ticker(instrument.symbol)
-        # ohlcv_df = ticker.history(
-        #     start=instrument.first_open_date,
-        # )
-        # make_django_records_from_df(
-        #     df=ohlcv_df.reset_index().dropna(how='any'),
-        #     model=self.model.ohlcv_data_daily,
-        # )
+        ticker = yf.Ticker(instrument.symbol)
+        ohlcv_df = ticker.history(
+            start=instrument.first_open_date,
+        )
+
+        # This DF may have rows with empty values in some columns, dropping rows with any NaN's.
+        # This DF has the date as the index, which we need to capture as a column for each entry
+        # So we need to reset the index on the DF.
+        ohlcv_df.reset_index().dropna(how='any')
+
+        make_django_records_from_df(
+            df=ohlcv_df,
+            model=self.model.ohlcv_data_daily,
+        )
 

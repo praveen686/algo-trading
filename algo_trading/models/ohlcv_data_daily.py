@@ -1,5 +1,5 @@
 from django.db import models
-from . import Instrument
+from .instruments import Instrument
 
 
 class OhlcvDataDaily(models.Model):

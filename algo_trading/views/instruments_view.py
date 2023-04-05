@@ -1,10 +1,10 @@
 # Create your views here.
 from django.shortcuts import get_object_or_404, render, redirect
 from django.views.decorators.http import require_http_methods
-from ..models import Instrument
+from ..models.instruments import Instrument
 
-from ..forms import AddInstrumentForm
-from ..exceptions import InvalidTickerSymbolError
+from ..forms.instruments.add_instrument_form import AddInstrumentForm
+from ..exceptions.instruments.invalid_ticker_symbol_error import InvalidTickerSymbolError
 
 
 @require_http_methods(["GET"])
@@ -76,8 +76,8 @@ def attempt_add_new_instrument(form: AddInstrumentForm) -> Instrument:
     Processes the symbol through the yfinance API to collect basic info about the stock
     and creates a new Instrument instance from that info
     For the newly created Instrument, downloads all historical data till date and creates
-    a record of type _FILLME_ for every available date in the historical data with their
-    OHLCV entries.
+    a record of type `OhlcvDataDaily` for every available date in the historical data with their
+    OHLC entries.
 
     Parameters
     ----------
@@ -96,7 +96,7 @@ def attempt_add_new_instrument(form: AddInstrumentForm) -> Instrument:
     """
 
     try:
-        new_instrument = Instrument.objects.process_new_instrument(form.cleaned_data['symbol'])
+        new_instrument = Instrument.objects.process_new_symbol(form.cleaned_data['symbol'])
         Instrument.objects.download_historical_data(new_instrument)
         return new_instrument
     except InvalidTickerSymbolError:

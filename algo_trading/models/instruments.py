@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-from .managers import InstrumentManager
+from .managers.instrument_manager import InstrumentManager
 
 
 class Instrument(models.Model):

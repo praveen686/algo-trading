@@ -4,7 +4,7 @@ from django.db import models
 import yfinance as yf
 import pandas as pd
 
-from ...exceptions import InvalidTickerSymbolError
+from ...exceptions.instruments.invalid_ticker_symbol_error import InvalidTickerSymbolError
 
 
 class InstrumentManager(models.Manager):
@@ -13,7 +13,7 @@ class InstrumentManager(models.Manager):
     KEY_FOR_FIRST_OPEN_DATE_IN_INFO = 'firstTradeDateMilliseconds'
     KEY_FOR_INSTRUMENT_TYPE_IN_INFO = 'typeDisp'
 
-    def process_new_instrument(self, new_symbol: str):
+    def process_new_symbol(self, new_symbol: str):
         """Process a new symbol to be recorded in the model `Instrument`
 
         Verify if the symbol is a valid one, if not raise an error

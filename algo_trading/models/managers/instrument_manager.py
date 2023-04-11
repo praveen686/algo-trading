@@ -145,8 +145,8 @@ class InstrumentManager(models.Manager):
         })
         ohlc_df['date'] = pd.to_datetime(ohlc_df['date']).apply(lambda x: x.to_pydatetime())
         ohlc_df['instrument_id'] = instrument.id
-        import pdb; pdb.set_trace();
-        ohlc_model = instrument.daily_data.model
-        instrument.daily_data.bulk_create(
-            ohlc_model(**vals) for vals in ohlc_df.to_dict('records')
+
+        daily_data_rel = instrument.daily_data
+        daily_data_rel.bulk_create(
+            daily_data_rel.model(**vals) for vals in ohlc_df.to_dict('records')
         )

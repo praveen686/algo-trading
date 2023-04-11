@@ -1,6 +1,6 @@
 import datetime
 
-from django.db import models
+from django.db import models, IntegrityError
 import yfinance as yf
 import pandas as pd
 
@@ -21,11 +21,14 @@ class InstrumentManager(models.Manager):
         for symbol in symbol_list:
             try:
                 created_symbols.append(self.import_symbol_from_yf(symbol))
-            except InvalidTickerSymbolError as exc:
+            except InvalidTickerSymbolError:
                 failed_symbols.append({'symbol': symbol, 'reason': "Symbol is invalid"})
-                continue
+            except IntegrityError:
+                failed_symbols.append({'symbol': symbol, 'reason': "Instrument already exists"})
             except Exception as exc:
                 failed_symbols.append({'symbol': symbol, 'reason': exc.args})
+            finally:
+                continue
 
         import_summary['failed'] = failed_symbols
         import_summary['created'] = created_symbols
@@ -100,6 +103,9 @@ class InstrumentManager(models.Manager):
             else:
                 # If there were any other AttributeError's, we pass them on to the caller of this method
                 raise error
+        except IntegrityError as exc:
+            # This happens when a symbol which is already imported is being attempted again
+            raise exc
         except Exception as exc:
             # If any other error from the API occurs, we pass them on to the caller of this method
             raise exc

@@ -43,34 +43,9 @@ def display_instrument(request, instrument: Instrument):
 
 @require_http_methods(["GET", "POST"])
 def add_instruments(request):
-    """Add an instrument into the system
+    """Add one or more instruments into the system
 
-    Uses a form modeled on the `Instrument` class and uses only the field `symbol`
-    The form is validated against the model and at the HTTP level
-    If the request was a GET, it means user navigated to this page, so we show an empty form.
-    The empty form prompts the user to enter the symbol that needs to be added to our system
-    If the request was a POST, it means user typed in the symbol and submitted the form.
-    A new record is attempted to be created from the symbol.
-    If the symbol is correct, and no API failure happens, the symbol is added and navigation
-    directed to that Instrument's show page.
-    If the symbol is incorrect or an API failure happens, relevant error message is shown on the form.
-    """
-
-    if request.method == 'POST':
-        form = AddInstrumentForm(request.POST)
-
-        if form.is_valid():
-            new_instrument = attempt_add_new_instrument(form)
-            if new_instrument is not None:
-                return redirect(new_instrument)
-    else:
-        form = AddInstrumentForm()
-
-    return render(request, 'instruments/add_instrument.html', {'form': form})
-
-
-def attempt_add_new_instrument(form: AddInstrumentForm) -> Instrument:
-    """Tries to create a new instrument from the form data.
+    Tries to create a new instrument from the form data.
 
     Internal function for the view, not to be called from outside.
     Processes the symbol through the yfinance API to collect basic info about the stock
@@ -81,24 +56,31 @@ def attempt_add_new_instrument(form: AddInstrumentForm) -> Instrument:
 
     Parameters
     ----------
-    form: AddInstrumentForm
-        An instance of AddInstrumentForm bound with the POST data from the request
-
-    Returns
-    ----------
-    new_instrument: Instrument
-        The new `Instrument` instance that was created with the form data, a la, the symbol
+    request:
+        The request object
 
     Raises
     ------
-    Adds errors to the form on the field `symbol` if it was invalid,
-    or to the general non-form-field if there were any other API/model level errors
+    Does not raise any error, but shows all failing symbols on the resulting page table
+    Also shows the successfully imported symbols on the resulting page table
     """
 
-    try:
-        new_instrument = Instrument.objects.import_symbol_from_yf(form.cleaned_data['symbol'])
-        return new_instrument
-    except InvalidTickerSymbolError:
-        form.add_error('symbol', 'The requested symbol is invalid. No ticker info found.')
-    except Exception as exception:
-        form.add_error(None, exception.args)
+    symbols_import_summary = {}
+    if request.method == 'POST':
+        form = AddInstrumentForm(request.POST)
+
+        if form.is_valid():
+            symbols = [s.strip() for s in form.cleaned_data['symbol'].split(",")]
+            symbols_import_summary = Instrument.objects.import_symbols_from_yf(symbols)
+
+    else:
+        form = AddInstrumentForm()
+
+    return render(
+        request,
+        'instruments/add_instrument.html',
+        {
+            'form': form,
+            'symbols_import_summary': symbols_import_summary
+        }
+    )

@@ -22,13 +22,15 @@ class InstrumentManager(models.Manager):
             try:
                 created_symbols.append(self.import_symbol_from_yf(symbol))
             except InvalidTickerSymbolError as exc:
-                failed_symbols.append({'symbol': symbol, 'reason': exc.args})
+                failed_symbols.append({'symbol': symbol, 'reason': "Symbol is invalid"})
                 continue
+            except Exception as exc:
+                failed_symbols.append({'symbol': symbol, 'reason': exc.args})
 
         import_summary['failed'] = failed_symbols
         import_summary['created'] = created_symbols
 
-        return pd.DataFrame(import_summary)
+        return import_summary
 
     def import_symbol_from_yf(self, symbol: str):
         ingested_instrument = self.create_instrument_from_symbol(symbol)

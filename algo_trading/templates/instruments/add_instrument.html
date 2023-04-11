@@ -10,56 +10,62 @@
     </div>
   {% endfor %}
 
-  <input type="Submit" name="add" value="Fetch &amp; Validate Symbol" />
+  <input type="Submit" name="add" value="Fetch &amp; Validate Symbol" data-disable-with="Loading"/>
 
 </form>
 
 {% if symbols_import_summary|length > 0 %}
-  <div>
-    <p class="header">List of symbols that failed to import</p>
-    <table class="failed-symbols">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Symbol</th>
-          <th>Failure reason</th>
-        </tr>
-      </thead>
+  {% if symbols_import_summary.failed|length > 0 %}
+    <div>
+      <p class="header">List of symbols that failed to import</p>
+        <table class="failed-symbols">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Symbol</th>
+              <th>Failure reason</th>
+            </tr>
+          </thead>
 
-      <tbody>
-        {% for failed_sym in symbols_import_summary.failed %}
+          <tbody>
+            {% for failed_sym in symbols_import_summary.failed %}
+              <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ failed_sym.symbol }}</td>
+                <td>{{ failed_sym.reason }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+    </div>
+  {% endif %}
+
+  {% if symbols_import_summary.created|length > 0 %}
+    <div>
+      <p class="header">Successfully imported symbols</p>
+      <table class="imported-symbols">
+        <thead>
           <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ failed_sym.symbol }}</td>
-            <td>{{ failed_sym.reason }}</td>
+            <th>#</th>
+            <th>Symbol</th>
+            <th>Name</th>
+            <th>First Open Date</th>
+            <th>Instrument Type</th>
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  </div>
+        </thead>
 
-  <div>
-    <p class="header">Successfully imported symbols</p>
-    <table class="imported-symbols">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Symbol</th>
-          <th>Name</th>
-          <th>First Open Date</th>
-          <th>Instrument Type</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        {% for imported_instrument in symbols_import_summary.created %}
-          <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ imported_instrument.symbol }}</td>
-            <td>{{ imported_instrument.descriptive_name }}</td>
-            <td>{{ imported_instrument.first_open_date }}</td>
-            <td>{{ imported_instrument.instrument_type }}</td>
-          </tr>
-        {% endfor %}
-      </tbody>
+        <tbody>
+          {% for imported_instrument in symbols_import_summary.created %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td><a href={% url "instrument-symbol" imported_instrument.symbol %}>{{ imported_instrument.symbol }}</a></td>
+              <td>{{ imported_instrument.descriptive_name }}</td>
+              <td>{{ imported_instrument.first_open_date }}</td>
+              <td>{{ imported_instrument.instrument_type }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endif %}
 {% endif %}

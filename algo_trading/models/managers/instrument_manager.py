@@ -127,16 +127,16 @@ class InstrumentManager(models.Manager):
         # @TODO: allow range/interval to be passed as an arg to indicate the frequency at which
         # data is desired. Currently one 1d interval is supported.
         ticker = yf.Ticker(instrument.symbol)
-        ohlcv_df = ticker.history(
+        ohlc_df = ticker.history(
             start=instrument.first_open_date,
         )
 
         # This DF may have rows with empty values in some columns, dropping rows with any NaN's.
         # This DF has the date as the index, which we need to capture as a column for each entry
         # So we need to reset the index on the DF.
-        ohlcv_df = ohlcv_df.reset_index().dropna(how='any')
-        ohlcv_df = ohlcv_df.drop(["Volume", "Dividends", "Stock Splits"], axis=1)
-        ohlc_df = ohlcv_df.rename(columns={
+        ohlc_df = ohlc_df.reset_index().dropna(how='any')
+        ohlc_df = ohlc_df.drop(["Volume", "Dividends", "Stock Splits"], axis=1)
+        ohlc_df = ohlc_df.rename(columns={
             "Date": "date",
             "Open": "open",
             "High": "high",

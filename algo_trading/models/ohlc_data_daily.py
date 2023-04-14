@@ -57,7 +57,4 @@ class OhlcDataDaily(models.Model):
     def __str__(self):
         return str(self.date)
 
-    def get_absolute_url(self):
-        return ('')
-
     # TODO: Define custom methods here

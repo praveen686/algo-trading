@@ -58,7 +58,11 @@
           {% for imported_instrument in symbols_import_summary.created %}
             <tr>
               <td>{{ forloop.counter }}</td>
-              <td><a href={% url "instrument-symbol" imported_instrument.symbol %}>{{ imported_instrument.symbol }}</a></td>
+              <td>
+                <a href={% url "instrument-symbol" imported_instrument.symbol %}>
+                  {{ imported_instrument.symbol }}
+                </a>
+              </td>
               <td>{{ imported_instrument.descriptive_name }}</td>
               <td>{{ imported_instrument.first_open_date }}</td>
               <td>{{ imported_instrument.instrument_type }}</td>

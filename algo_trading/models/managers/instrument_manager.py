@@ -41,6 +41,26 @@ class InstrumentManager(models.Manager):
             raise Http404("No Instrument matches the given symbol.")
 
     def import_symbols_from_yf(self, symbol_list: list) -> pd.DataFrame:
+        """Import multiple symbols from yFinance.
+
+        Given a list of symbols to import, this fetches all their instrument info, and then their
+        OHLC historical data from the yfinance API, by calling `import_symbol_from_yf` for each symbol.
+        Any errors from importing each symbol is captured and the symbol is stored in the
+        failed bucket along with the error msg.
+        Any successful import is stored in the created bucket
+
+        Parameters
+        ----------
+        symbol_list: str
+            List of symbols for which to import data
+
+        Returns
+        -------
+        import_summary: dict[str, list()]
+            A dict containing keys +created+ and +failed+
+            +created+ key contains a list of Instrument objects that were created
+            +failed+ key contains a list of dict with keys +symbol+ and +reason+ containing the error msg.
+        """
         import_summary = {}
         failed_symbols = []
         created_symbols = []
@@ -65,6 +85,21 @@ class InstrumentManager(models.Manager):
         return import_summary
 
     def import_symbol_from_yf(self, symbol: str):
+        """Import one instrument from YF
+
+        Creates an instrument from the symbol, failing which raises errors
+        Downloads historical data for the symbol.
+
+        Parameters
+        ----------
+        symbol: str
+            The symbol to be imported
+
+        Returns
+        -------
+        ingested_instrument: Instrument
+            The Instrument object that got created for the symbol.
+        """
         ingested_instrument = self.create_instrument_from_symbol(symbol)
         self.download_historical_data_for(ingested_instrument)
 
@@ -94,7 +129,9 @@ class InstrumentManager(models.Manager):
         AttributeError
             If there is any unreferred attribute being accessed. This is in addition to the symbol being
             invalid, which is also identified by an AttributeError from the API response
-        Exxception
+        IntegrityError
+            If the symbol already exists in the database, and is being requested again.
+        Exception
             Any errors coming from the API, passed on as-is to the caller.
             Any errors coming from the record creation, is also passed on as-is.
         """
@@ -157,7 +194,7 @@ class InstrumentManager(models.Manager):
 
         Creates
         -------
-            OhlcvDataDaily records for each row found in historical data
+            OhlcDataDaily records for each row found in historical data
             Sets their parent record to +instrument+
         """
 

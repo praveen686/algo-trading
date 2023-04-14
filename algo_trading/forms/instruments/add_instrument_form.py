@@ -1,5 +1,4 @@
 from django import forms
-from ...models.instruments import Instrument
 
 
 class AddInstrumentForm(forms.Form):

@@ -27,8 +27,10 @@ class InstrumentManager(models.Manager):
                 failed_symbols.append({'symbol': symbol, 'reason': "Instrument already exists"})
             except Exception as exc:
                 failed_symbols.append({'symbol': symbol, 'reason': exc.args})
-            finally:
-                continue
+
+            # Any possible error for each symbol is handled and an appropriate msg is generated.
+            # Whether any one symbol passes or fails, the import continues on for the rest of the symbols.
+            continue
 
         import_summary['failed'] = failed_symbols
         import_summary['created'] = created_symbols

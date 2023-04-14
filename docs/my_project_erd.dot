@@ -1,6 +1,6 @@
 digraph model_graph {
   // Dotfile by Django-Extensions graph_models
-  // Created: 2023-04-04 14:13
+  // Created: 2023-04-14 13:02
   // Cli Options: -a
 
   fontname = "Roboto"
@@ -120,11 +120,11 @@ digraph model_graph {
     </TABLE>
     >]
 
-  algo_trading_models_ohlcv_data_daily_OhlcvDataDaily [label=<
+  algo_trading_models_ohlc_data_daily_OhlcDataDaily [label=<
     <TABLE BGCOLOR="white" BORDER="1" CELLBORDER="0" CELLSPACING="0">
     <TR><TD COLSPAN="2" CELLPADDING="5" ALIGN="CENTER" BGCOLOR="#1b563f">
     <FONT FACE="Roboto" COLOR="white" POINT-SIZE="10"><B>
-    OhlcvDataDaily
+    OhlcDataDaily
     </B></FONT></TD></TR>
   
   
@@ -140,14 +140,6 @@ digraph model_graph {
     <FONT FACE="Roboto"><B>instrument</B></FONT>
     </TD><TD ALIGN="LEFT">
     <FONT FACE="Roboto"><B>ForeignKey (id)</B></FONT>
-    </TD></TR>
-  
-  
-  
-    <TR><TD ALIGN="LEFT" BORDER="0">
-    <FONT FACE="Roboto">_order</FONT>
-    </TD><TD ALIGN="LEFT">
-    <FONT FACE="Roboto">OrderWrt</FONT>
     </TD></TR>
   
   
@@ -722,7 +714,7 @@ digraph model_graph {
 
   // Relations
 
-  algo_trading_models_ohlcv_data_daily_OhlcvDataDaily -> algo_trading_models_instruments_Instrument
+  algo_trading_models_ohlc_data_daily_OhlcDataDaily -> algo_trading_models_instruments_Instrument
   [label=" instrument (daily_data)"] [arrowhead=none, arrowtail=dot, dir=both];
 
 

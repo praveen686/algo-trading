@@ -2,7 +2,7 @@ from django.db import models
 from .instruments import Instrument
 
 
-class OhlcvDataDaily(models.Model):
+class OhlcDataDaily(models.Model):
     # REFACTOR: Create a custom field for `DecimalField`for capturing all price fields from Trading API
 
     # Deliberately calling the timestamp column by a simplified name `date` as most trading APIs have
@@ -33,8 +33,8 @@ class OhlcvDataDaily(models.Model):
     )
 
     class Meta:
-        verbose_name = "OhlcvDataDaily"
-        verbose_name_plural = "OhlcvDataDailies"
+        verbose_name = "OhlcDataDaily"
+        verbose_name_plural = "OhlcDataDailies"
 
         indexes = [
             models.Index(fields=['date'], name="ohlcv_daily_date_idx"),
@@ -54,20 +54,7 @@ class OhlcvDataDaily(models.Model):
 
         get_latest_by = "date"  # should it be -date?, check when we have data
 
-        # THIS IS NOT WORKING, CHECK AGAIN
-        # Adds `instrument.get_ohlcv_data_daily_order(), instrument.set_ohlcv_data_daily_order()`
-        # to Instrument class' instances.
-        # Adds `ohlcv_data_daily.get_next_in_order(), ohlcv_data_daily.get_previous_in_order()` to
-        # this class' instances.
-        # This implicitly sets the `ordering` field.
-        #
-        # WARN: DON'T USE ORDERING AGAIN IN THIS MODEL
-        # order_with_respect_to = "instrument_id"
-
     def __str__(self):
         return str(self.date)
-
-    def get_absolute_url(self):
-        return ('')
 
     # TODO: Define custom methods here

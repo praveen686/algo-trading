@@ -1,5 +1,6 @@
 import datetime
 
+from django.http import Http404
 from django.db import models, IntegrityError
 import yfinance as yf
 import pandas as pd
@@ -12,6 +13,32 @@ class InstrumentManager(models.Manager):
     KEY_FOR_DESCRIPTIVE_NAME_IN_INFO = 'longName'
     KEY_FOR_FIRST_OPEN_DATE_IN_INFO = 'firstTradeDateMilliseconds'
     KEY_FOR_INSTRUMENT_TYPE_IN_INFO = 'typeDisp'
+
+    def get_by_symbol(self, symbol: str):
+        """Get an instrument by its symbol, irrespective of case
+
+        Both the queried and the DB column are matched case-insensitive to allow any of the variations:
+        RELIANCE.NS, Reliance.NS, RELIANCE.ns, reliancE.nS etc to be mapped to +RELIANCE.NS+
+
+        Parameters
+        ----------
+        symbol: str
+            The symbol to look for
+
+        Raises
+        ------
+        Http404
+            If the symbol cannot be found
+
+        Returns
+        -------
+        Instrument object
+            The instrument matching the symbol, irrespective of case
+        """
+        try:
+            return super().get_queryset().get(symbol__iexact=symbol)
+        except self.model.DoesNotExist:
+            raise Http404("No Instrument matches the given symbol.")
 
     def import_symbols_from_yf(self, symbol_list: list) -> pd.DataFrame:
         import_summary = {}

@@ -20,8 +20,8 @@ def instrument_by_pk(request, pk: int):
 @require_http_methods(["GET"])
 def instrument_by_symbol(request, symbol: str):
     """Show an `Instrument` instance identified by its `symbol`"""
-    print(symbol)
-    instrument = get_object_or_404(Instrument, symbol=symbol)
+
+    instrument = Instrument.objects.get_by_symbol(symbol)
     return display_instrument(
         request,
         instrument

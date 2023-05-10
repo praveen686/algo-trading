@@ -7,6 +7,9 @@
 
 {# Display django.contrib.messages as Bootstrap alerts #}
 {% bootstrap_messages %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'algo_trading/style.css' %}">
 
 <h2>Details for {{ instrument.get_instrument_type_display }}: {{ instrument.symbol }}</h2>
 

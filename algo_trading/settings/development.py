@@ -1,4 +1,11 @@
+import environ
+
 from algo_trading.settings.common import *
+
+env = environ.Env(
+    # set casting, default value
+    DEBUG=(bool, False)
+)
 
 # Take environment variables from .env file
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -30,7 +37,3 @@ DATABASES = {
     # The db() method is an alias for db_url().
     'default': env.db(),
 }
-
-# 'TEST': {
-#     'NAME': 'test_algo_trading',
-# },

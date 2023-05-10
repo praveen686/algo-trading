@@ -16,10 +16,6 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['algo-trading-env.eba-w8phimmm.ap-south-1.elasticbeanstalk.com', '172.31.32.63']
 
-CSRF_COOKIE_SECURE = True
-
-SESSION_COOKIE_SECURE = True
-
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {
         'default': {

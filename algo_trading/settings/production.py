@@ -14,7 +14,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['algo-trading-dev.ap-south-1.elasticbeanstalk.com', '172.31.11.81']
+ALLOWED_HOSTS = ['algo-trading-env.eba-w8phimmm.ap-south-1.elasticbeanstalk.com', '172.31.11.81']
 
 CSRF_COOKIE_SECURE = True
 

@@ -1,3 +1,16 @@
+{# Load the tag library #}
+{% load bootstrap5 %}
+
+{# Load CSS and JavaScript #}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+{# Display django.contrib.messages as Bootstrap alerts #}
+{% bootstrap_messages %}
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'algo_trading/style.css' %}">
+
 <h2>Details for {{ instrument.get_instrument_type_display }}: {{ instrument.symbol }}</h2>
 
 <p>
@@ -9,7 +22,7 @@
 {% if daily_data.count > 0 %}
   <div class="ohlc-data-container">
     <p class="ohlc-data-count">Total <strong>{{ daily_data.count }}</strong> OHLC values</p>
-    <table class="ohlc-data table-striped table-bordered">
+    <table class="ohlc-data table table-striped table-bordered">
       <thead>
         <tr>
           <th>Date</th>

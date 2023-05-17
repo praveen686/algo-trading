@@ -14,7 +14,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['algo-trading-env.eba-w8phimmm.ap-south-1.elasticbeanstalk.com', '172.31.32.63']
+ALLOWED_HOSTS = ['algo-trading-env.eba-w8phimmm.ap-south-1.elasticbeanstalk.com', '172.31.8.67']
 
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {

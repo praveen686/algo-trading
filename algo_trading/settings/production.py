@@ -14,7 +14,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['malgotrading.com', '172.31.8.67']
+ALLOWED_HOSTS = ['malgotrading.com', 'www.malgotrading.com', '172.31.8.67']
 
 if 'RDS_HOSTNAME' in os.environ:
     DATABASES = {

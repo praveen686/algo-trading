@@ -13,3 +13,5 @@
 __pycache__/*
 
 activate.sh
+.env
+.DS_Store

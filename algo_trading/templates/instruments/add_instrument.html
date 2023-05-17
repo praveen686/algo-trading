@@ -3,6 +3,10 @@
 {% bootstrap_css %}
 {% bootstrap_javascript %}
 
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'algo_trading/style.css' %}">
+
 <form action={% url "add-instrument" %} method="POST">
   {% csrf_token %}
   <h3>Enter one or more symbols that you wan't to import</h3>

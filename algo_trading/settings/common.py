@@ -34,7 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'django.contrib.admindocs',
-    'bootstrap5',
+    'django_bootstrap5',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +52,7 @@ ROOT_URLCONF = 'algo_trading.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'algo_trading', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,4 +1,6 @@
-{% load bootstrap5 %}
+{% extends "base.html" %}
+
+{% load django_bootstrap5 %}
 {# Load CSS and JavaScript #}
 {% bootstrap_css %}
 {% bootstrap_javascript %}
@@ -7,52 +9,48 @@
 
 <link rel="stylesheet" href="{% static 'algo_trading/style.css' %}">
 
-<form action={% url "add-instrument" %} method="POST">
-  {% csrf_token %}
-  <h3>Enter one or more symbols that you wan't to import</h3>
+{% block content %}
+  <form action={% url "add-instrument" %} method="POST">
+    {% csrf_token %}
+    <h3>Enter one or more symbols that you wan't to import</h3>
 
-  <!-- Render fields manually to apply styling, later on -->
-  {% for field in form %}
-    <div class="fieldWrapper">
-      {{ field.errors }}
-      {{ field.label_tag }} {{ field }}
-    </div>
-  {% endfor %}
+    {% bootstrap_form form %}
 
-  {% bootstrap_button "Fetch &amp; Validate Symbol" button_type="submit" button_class="btn-primary" %}
+    {% bootstrap_button "Fetch &amp; Validate Symbol" button_type="submit" button_class="btn-primary" %}
 
-</form>
+  </form>
 
-{% if symbols_import_summary|length > 0 %}
-  {% if symbols_import_summary.failed|length > 0 %}
-    <div>
-      <p class="header">List of symbols that failed to import</p>
-        <table class="failed-symbols">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Symbol</th>
-              <th>Failure reason</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {% for failed_sym in symbols_import_summary.failed %}
+  {% if symbols_import_summary|length > 0 %}
+    {% if symbols_import_summary.failed|length > 0 %}
+      <div>
+        <p class="header">List of symbols that failed to import</p>
+          <table class="failed-symbols">
+            <thead>
               <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ failed_sym.symbol }}</td>
-                <td>{{ failed_sym.reason }}</td>
+                <th>#</th>
+                <th>Symbol</th>
+                <th>Failure reason</th>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-    </div>
-  {% endif %}
+            </thead>
 
-  {% if symbols_import_summary.created|length > 0 %}
-    <div>
-      <p class="header">Successfully imported symbols</p>
-      {% include "instruments/display_meta_in_table.html" with instruments=symbols_import_summary.created %}
-  </div>
+            <tbody>
+              {% for failed_sym in symbols_import_summary.failed %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ failed_sym.symbol }}</td>
+                  <td>{{ failed_sym.reason }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+    {% endif %}
+
+    {% if symbols_import_summary.created|length > 0 %}
+      <div>
+        <p class="header">Successfully imported symbols</p>
+        {% include "instruments/display_meta_in_table.html" with instruments=symbols_import_summary.created %}
+    </div>
+    {% endif %}
   {% endif %}
-{% endif %}
+{% endblock %}

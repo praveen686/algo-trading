@@ -4,13 +4,23 @@
     <title>{% block title %}{% endblock %}</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    {% load django_bootstrap5 %}
-    {# Load CSS and JavaScript #}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-
     {% load static %}
-    <link rel="stylesheet" href="{% static 'algo_trading/style.css' %}">
+
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--end::Fonts-->
+
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="{% static 'plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'css/style.bundle.css' %}"  rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+
+    <link rel="stylesheet" href="{% static 'algo_trading/style_overrides.css' %}">
+
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{% static 'plugins/global/plugins.bundle.js' %}"></script>
+    <script src="{% static 'js/scripts.bundle.js' %}"></script>
+    <!--end::Global Javascript Bundle-->
   </head>
 
   <body>
@@ -23,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
           <ul class="navbar-nav me-auto mb-2 mb-md-0">
             <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="#">Home</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'list-instruments' %}">Home</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#">Link</a>
@@ -42,8 +52,10 @@
 
     <main class="container-fluid">
       <div class="row">
-        <div class="">{% block content %}{% endblock %}</div>
+        <div class="container">{% block content %}{% endblock %}</div>
       </div>
-    </div>
+    </main>
+
+    {% block scripts %} {% endblock %}
   </body>
 </html>

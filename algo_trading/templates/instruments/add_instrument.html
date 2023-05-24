@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 
 {% load django_bootstrap5 %}
-{# Load CSS and JavaScript #}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
-{% load static %}
-
-<link rel="stylesheet" href="{% static 'algo_trading/style.css' %}">
 
 {% block content %}
   <form action={% url "add-instrument" %} method="POST">

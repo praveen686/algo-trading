@@ -1,27 +1,41 @@
-<table class="instruments-list table table-striped table-bordered">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Symbol</th>
-      <th>Name</th>
-      <th>First Open Date</th>
-      <th>Instrument Type</th>
-    </tr>
-  </thead>
+{% load static %}
 
-  <tbody>
-    {% for instrument in instruments %}
+<div class="table-responsive">
+  <table class="instruments-list table rounded table-striped border gy-7 gs-7">
+    <thead>
       <tr>
-        <td>{{ forloop.counter }}</td>
-        <td>
-          <a href={% url "instrument-symbol" instrument.symbol %}>
-            {{ instrument.symbol }}
-          </a>
-        </td>
-        <td>{{ instrument.descriptive_name }}</td>
-        <td>{{ instrument.first_open_date }}</td>
-        <td>{{ instrument.instrument_type }}</td>
+        <th>#</th>
+        <th>Symbol</th>
+        <th>Name</th>
+        <th>First Open Date</th>
+        <th>Instrument Type</th>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      {% for instrument in instruments %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>
+            <a href={% url "instrument-symbol" instrument.symbol %}>
+              {{ instrument.symbol }}
+            </a>
+          </td>
+          <td>{{ instrument.descriptive_name }}</td>
+          <td>{{ instrument.first_open_date }}</td>
+          <td>{{ instrument.instrument_type }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<link href="{% static 'plugins/custom/datatables/datatables.bundle.css' %}" rel="stylesheet" type="text/css" />
+<script src="{% static 'plugins/custom/datatables/datatables.bundle.js' %}"></script>
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('.instruments-list').DataTable({
+      "pageLength": 25,
+    });
+  });
+</script>

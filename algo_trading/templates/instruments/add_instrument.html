@@ -7,9 +7,21 @@
     {% csrf_token %}
     <h3>Enter one or more symbols that you wan't to import</h3>
 
-    {% bootstrap_form form %}
+    <label for="{{ form.symbol.id_for_label }}" class="form-label">{{ form.symbol.label }}</label>
 
-    {% bootstrap_button "Fetch &amp; Validate Symbol" button_type="submit" button_class="btn-primary" %}
+    <div class="input-group input-group-lg mb-5">
+        <span class="input-group-text" id="basic-addon1">@</span>
+        <input
+          type="text"
+          name="{{ form.symbol.html_name }}"
+          class="form-control"
+          id="{{ form.symbol.id_for_label }}"
+          aria-describedby="basic-addon1"
+          placeholder="Comma separated symbols for import"
+          required
+        />
+    </div>
+    {% bootstrap_button "Fetch &amp; Validate Symbols" button_type="submit" button_class="btn-primary" %}
 
   </form>
 
@@ -17,7 +29,7 @@
     {% if symbols_import_summary.failed|length > 0 %}
       <div>
         <p class="header">List of symbols that failed to import</p>
-          <table class="failed-symbols">
+          <table class="failed-symbols table rounded table-striped border gy-7 gs-7">
             <thead>
               <tr>
                 <th>#</th>

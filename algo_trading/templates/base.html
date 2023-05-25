@@ -47,7 +47,7 @@
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </div>
 
-          <button class="zerodha-login-nav-btn btn btn-danger btn-hover-scale me-5 fs-6" href="#">
+          <a class="zerodha-login-nav-btn btn btn-danger btn-hover-scale me-5 fs-6 disabled" href="#">
             <span class="svg-icon svg-icon-2x">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M13 9V8C13 7.4 13.4 7 14 7H15C16.7 7 18 5.7 18 4V3C18 2.4 17.6 2 17 2C16.4 2 16 2.4 16 3V4C16 4.6 15.6 5 15 5H14C12.3 5 11 6.3 11 8V9H13Z" fill="currentColor"/>
@@ -55,7 +55,7 @@
               </svg>
             </span>
             Login to Zerodha
-          </button>
+          </a>
         </div>
       </div>
     </nav>
@@ -69,21 +69,17 @@
     {% block scripts %} {% endblock %}
 
     <script type="text/javascript">
+      "use strict";
       $(document).ready(function() {
-        // xhr to get zerodha login url
-        $(document).on('click', '.zerodha-login-nav-btn', function(e) {
-          e.preventDefault();
-
-          $.ajax({
-            url: '/zerodha_login_url?next={{ request.path }}',
-            method: 'POST',
-            headers: {'X-CSRFToken': '{{ csrf_token }}', 'Access-Control-Allow-Origin': '127.0.0.1:8000'},
-            success: function(data, status, xhr) {
-              console.log("data=", data);
-              console.log("status=", status);
-              console.log("xhr=", xhr);
-            },
-          });
+        $.ajax({
+          url: '/zerodha_login_url?next={{ request.path }}',
+          method: 'GET',
+          headers: {'X-CSRFToken': '{{ csrf_token }}'},
+          success: function(data, status, xhr) {
+            const zerodhaButton = $('.zerodha-login-nav-btn');
+            zerodhaButton.attr('href', data.zerodha_login_url);
+            zerodhaButton.removeClass('disabled');
+          },
         });
       });
     </script>

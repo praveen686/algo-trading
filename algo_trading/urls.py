@@ -27,4 +27,8 @@ urlpatterns = [
     path('instruments/show/<str:symbol>', views.instrument_by_symbol, name='instrument-symbol'),
     path('instruments/add', views.add_instruments, name='add-instrument'),
     path('instruments', views.list_instruments, name='list-instruments'),
+
+    # Zerodha
+    path('zerodha_login_url', views.zerodha_login_url, name='zerodha-login-url'),
+    path('zerodha_req_token', views.zerodha_req_token, name='zerodha-req-token'),
 ]

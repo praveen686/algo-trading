@@ -67,5 +67,25 @@
     </main>
 
     {% block scripts %} {% endblock %}
+
+    <script type="text/javascript">
+      $(document).ready(function() {
+        // xhr to get zerodha login url
+        $(document).on('click', '.zerodha-login-nav-btn', function(e) {
+          e.preventDefault();
+
+          $.ajax({
+            url: '/zerodha_login_url?next={{ request.path }}',
+            method: 'POST',
+            headers: {'X-CSRFToken': '{{ csrf_token }}', 'Access-Control-Allow-Origin': '127.0.0.1:8000'},
+            success: function(data, status, xhr) {
+              console.log("data=", data);
+              console.log("status=", status);
+              console.log("xhr=", xhr);
+            },
+          });
+        });
+      });
+    </script>
   </body>
 </html>

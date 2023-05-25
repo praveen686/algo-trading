@@ -10,10 +10,4 @@ class AddInstrumentForm(forms.Form):
     symbol = forms.CharField(
         label="Symbol names",
         max_length=1000,
-        widget=forms.TextInput(
-            attrs={
-                "placeholder": "Comma separated symbols for import",
-                "size": 200,
-            }
-        ),
     )

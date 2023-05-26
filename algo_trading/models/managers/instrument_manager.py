@@ -244,4 +244,20 @@ class InstrumentManager(models.Manager):
         -------
         List of all instruments either created or found
         """
-        return []
+        created_instruments = 0
+
+        for instrument_info in instruments_from_exchange:
+            instrument_info['symbol'] = instrument_info['tradingsymbol']
+            instrument_info['trading_symbol'] = instrument_info['tradingsymbol']
+            del instrument_info['tradingsymbol']
+            del instrument_info['last_price']
+
+            # print(f"creating instrument with {instrument_info}")
+            try:
+                self.create(**instrument_info)
+                created_instruments += 1
+            except IntegrityError:
+                pass
+                # print(f"instrument {instrument_info['symbol']} already exists")
+
+        return created_instruments

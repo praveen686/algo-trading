@@ -64,7 +64,7 @@ semantic-version==2.8.5
 service-identity==21.1.0
 six==1.14.0
 soupsieve==2.4
-sqlparse==0.4.3
+sqlparse==0.4.4
 termcolor==1.1.0
 texttable==1.6.7
 Twisted==22.10.0

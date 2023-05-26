@@ -31,4 +31,5 @@ urlpatterns = [
     # Zerodha
     path('zerodha_login_url', views.zerodha_login_url, name='zerodha-login-url'),
     path('zerodha_req_token', views.zerodha_req_token, name='zerodha-req-token'),
+    path('zerodha_instruments', views.zerodha_instruments),
 ]

@@ -7,13 +7,9 @@ from django.http import JsonResponse
 from ..models.kite_broker import KiteBroker
 
 
-ZERODHA_API_KEY = "g54suy4ucztqh9se"
-ZERODHA_API_SECRET = "i637gje20mtuxco4kczs8uc666ogpsop"
-
-
 @require_http_methods(["GET"])
 def zerodha_login_url(request):
-    kite = KiteBroker(api_key=ZERODHA_API_KEY)
+    kite = KiteBroker()
     redirect_string = "&redirect_params=" + urlencode({'redirect_to': request.GET.get('next')})
     return JsonResponse({'zerodha_login_url': kite.login_url() + redirect_string})
 
@@ -23,13 +19,16 @@ def zerodha_login_url(request):
 def zerodha_req_token(request):
     zerodha_request_token = request.GET.get('request_token')
     # todo add handler if token is nil or status/success is false
-    kite = KiteBroker(api_key=ZERODHA_API_KEY)
+    kite = KiteBroker()
 
-    data = kite.generate_session(zerodha_request_token, api_secret=ZERODHA_API_SECRET)
+    data = kite.create_session(zerodha_request_token)
     kite.set_access_token(data["access_token"])
+    kite.set_refresh_token(data["refresh_token"])
 
-    profile = kite.profile()
-
-    print(f"*******{profile}")
-    print(f"**** next is {request.GET.get('redirect_to')}")
     return redirect(request.GET.get('redirect_to'))
+
+
+def zerodha_instruments(request):
+    kite = KiteBroker()
+
+    return JsonResponse({'size': len(kite.instruments('NSE'))})

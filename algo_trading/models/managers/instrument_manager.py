@@ -224,3 +224,24 @@ class InstrumentManager(models.Manager):
         daily_data_rel.bulk_create(
             daily_data_rel.model(**vals) for vals in ohlc_df.to_dict('records')
         )
+
+    def load_bulk_instruments(self, instruments_from_exchange: list) -> list:
+        """Loads instruments available from the exchange into our DB.
+
+        Given an array of instruments, they're loaded into our DB if they're not present already.
+        Existing instruments are skipped over.
+
+        Parameters
+        ----------
+        instruments_from_exchange: Array<dict>
+            Array of objects containing info about the instruments available to trade on that exchange
+
+        Creates
+        -------
+
+
+        Returns
+        -------
+        List of all instruments either created or found
+        """
+        return []

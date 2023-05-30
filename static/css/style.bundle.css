@@ -45313,6 +45313,13 @@ a:hover {
   --kt-app-header-secondary-sticky-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
   --kt-app-toolbar-sticky-bg-color: #ffffff;
   --kt-app-toolbar-sticky-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
+  --kt-app-header-base-bg-color: #ffffff;
+  --kt-app-header-base-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
+  --kt-app-toolbar-base-bg-color: #ffffff;
+  --kt-app-toolbar-base-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
+  --kt-app-toolbar-base-border-top: 1px solid #F4F4F4;
+  --kt-app-footer-bg-color: #ffffff;
+  --kt-app-footer-box-shadow: 0px 10px 30px 0px rgba(82, 63, 105, 0.05);
 }
 
 [data-theme=dark] {
@@ -45321,6 +45328,13 @@ a:hover {
   --kt-app-header-secondary-sticky-box-shadow: none;
   --kt-app-toolbar-sticky-bg-color: #1a1a27;
   --kt-app-toolbar-sticky-box-shadow: none;
+  --kt-app-header-base-bg-color: #1e1e2d;
+  --kt-app-header-base-box-shadow: none;
+  --kt-app-toolbar-base-bg-color: #1a1a27;
+  --kt-app-toolbar-base-box-shadow: none;
+  --kt-app-toolbar-base-border-top: 0;
+  --kt-app-footer-bg-color: #1e1e2d;
+  --kt-app-footer-box-shadow: none;
 }
 
 html {

@@ -34,16 +34,17 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
         return self.generate_session(zerodha_request_token, api_secret=env('ZERODHA_API_SECRET'))
 
     def load_instruments_for_today(self):
-        print("Starting instruments load")
+        logger.info("Starting instruments load")
         instruments_loaded = []
 
         for exchange in self.EXCHANGES_IN_OPERATION:
-            print(f"Starting instruments load for exchange: {exchange}")
+            logger.info(f"Starting instruments load for exchange: {exchange}")
 
             instruments_in_exchange = self.instruments(exchange)
-            print(f"Found {len(instruments_in_exchange)} instruments in exchange {exchange}")
+            logger.info(f"Found {len(instruments_in_exchange)} instruments in exchange {exchange}")
 
             newly_created = Instrument.objects.load_bulk_instruments(instruments_in_exchange)
+            logger.info(f"Created new {newly_created} instruments for exchange {exchange}")
 
             instruments_loaded.append({exchange: newly_created})
 

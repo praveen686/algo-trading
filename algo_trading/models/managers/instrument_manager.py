@@ -252,12 +252,10 @@ class InstrumentManager(models.Manager):
             del instrument_info['tradingsymbol']
             del instrument_info['last_price']
 
-            # print(f"creating instrument with {instrument_info}")
             try:
                 self.create(**instrument_info)
                 created_instruments += 1
             except IntegrityError:
                 pass
-                # print(f"instrument {instrument_info['symbol']} already exists")
 
         return created_instruments

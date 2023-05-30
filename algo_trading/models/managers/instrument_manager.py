@@ -36,7 +36,7 @@ class InstrumentManager(models.Manager):
             The instrument matching the symbol, irrespective of case
         """
         try:
-            return super().get_queryset().get(symbol__iexact=symbol)
+            return super().get_queryset().get(trading_symbol__iexact=symbol)
         except self.model.DoesNotExist:
             raise Http404("No Instrument matches the given symbol.")
 

@@ -20,54 +20,1148 @@
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
     <script src="{% static 'plugins/global/plugins.bundle.js' %}"></script>
     <script src="{% static 'js/scripts.bundle.js' %}"></script>
+    <script src="{% static 'js/custom/utilities/modals/users-search.js' %}"></script>
     <!--end::Global Javascript Bundle-->
   </head>
 
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <div class="container-fluid">
-        <a class="navbar-brand fs-4" href="#">
-          <span class="svg-icon svg-icon-2hx svg-icon-success">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path opacity="0.3" d="M8.4 14L15.6 8.79999L20 9.90002V6L16 4L9 11L5 12V14H8.4Z" fill="currentColor"/>
-              <path d="M21 18H20V12L16 11L9 16H6V3C6 2.4 5.6 2 5 2C4.4 2 4 2.4 4 3V18H3C2.4 18 2 18.4 2 19C2 19.6 2.4 20 3 20H4V21C4 21.6 4.4 22 5 22C5.6 22 6 21.6 6 21V20H21C21.6 20 22 19.6 22 19C22 18.4 21.6 18 21 18Z" fill="currentColor"/>
-            </svg>
-          </span>
-          Algo Trading
-        </a>
+  <body
+    id="kt_app_body"
+    data-kt-app-layout="dark-sidebar"
+    data-kt-app-header-fixed="true"
+    data-kt-app-toolbar-enabled="true"
+    class="app-default"
+  >
+    <!--begin::App-->
+    <div class="d-flex flex-column flex-root app-root" id="kt_app_root">
+      <!--begin::Page-->
+      <div class="app-page flex-column flex-column-fluid" id="kt_app_page">
+        <!--begin::Header-->
+        <div id="kt_app_header" class="app-header">
+          <!--begin::Header container-->
+          <div class="app-container container-fluid d-flex align-items-stretch justify-content-between" id="kt_app_header_container">
+            <!--begin::Header wrapper-->
+            <div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1" id="kt_app_header_wrapper">
+              <!--begin::Menu wrapper-->
+              <div
+                class="app-header-menu app-header-mobile-drawer align-items-stretch"
+                data-kt-drawer="true"
+                data-kt-drawer-name="app-header-menu"
+                data-kt-drawer-activate="{default: true, lg: false}"
+                data-kt-drawer-overlay="true"
+                data-kt-drawer-width="250px"
+                data-kt-drawer-direction="end"
+                data-kt-drawer-toggle="#kt_app_header_menu_toggle"
+                data-kt-swapper="true"
+                data-kt-swapper-mode="{default: 'append', lg: 'prepend'}"
+                data-kt-swapper-parent="{default: '#kt_app_body', lg: '#kt_app_header_wrapper'}"
+              >
+                <!--begin::Menu-->
+                <div class="menu menu-rounded menu-column menu-lg-row my-5 my-lg-0 align-items-stretch fw-semibold px-2 px-lg-0" id="kt_app_header_menu" data-kt-menu="true">
+                  <!--begin:Menu item-->
+                  <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-here-bg menu-lg-down-accordion me-0 me-lg-2">
+                    <!--begin:Menu link-->
+                    <span class="menu-link"><span class="menu-title">Dashboards</span><span class="menu-arrow d-lg-none"></span></span>
+                    <!--end:Menu link--><!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0 w-100 w-lg-850px" style="">
+                      <!--begin:Dashboards menu-->
+                      <div class="menu-state-bg menu-extended overflow-hidden overflow-lg-visible" data-kt-menu-dismiss="true">
+                        <!--begin:Row-->
+                        <div class="row">
+                          <!--begin:Col-->
+                          <div class="col-lg-8 mb-3 mb-lg-0 py-3 px-3 py-lg-6 px-lg-6">
+                            <!--begin:Row-->
+                            <div class="row">
+                              <!--begin:Col-->
+                              <div class="col-lg-6 mb-3">
+                                <!--begin:Menu item-->
+                                <div class="menu-item p-0 m-0">
+                                  <!--begin:Menu link-->
+                                  <a href="/metronic8/demo1/../demo1/index.html" class="menu-link">
+                                    <span class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
+                                      <i class="ki-duotone ki-element-11 text-primary fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                    </span>
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+                                    <span class="d-flex flex-column">
+                                      <span class="fs-6 fw-bold text-gray-800">Default</span>
+                                      <span class="fs-7 fw-semibold text-muted">Reports &amp; statistics</span>
+                                    </span>
+                                  </a>
+                                  <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                              </div>
+                              <!--end:Col-->
+                              <!--begin:Col-->
+                              <div class="col-lg-6 mb-3">
+                                <!--begin:Menu item-->
+                                <div class="menu-item p-0 m-0">
+                                  <!--begin:Menu link-->
+                                  <a href="/metronic8/demo1/../demo1/dashboards/ecommerce.html" class="menu-link">
+                                    <span class="menu-custom-icon d-flex flex-center flex-shrink-0 rounded w-40px h-40px me-3">
+                                      <i class="ki-duotone ki-basket text-danger fs-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                    </span>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-          <div class="navbar-nav me-auto mb-2 mb-md-0">
-            <a class="nav-link active" aria-current="page" href="{% url 'list-instruments' %}">Home</a>
-            <a class="nav-link" href="{% url 'add-instrument' %}">Add Instrument</a>
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                                    <span class="d-flex flex-column">
+                                      <span class="fs-6 fw-bold text-gray-800">eCommerce</span>
+                                      <span class="fs-7 fw-semibold text-muted">Sales reports</span>
+                                    </span>
+                                  </a>
+                                  <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                              </div>
+                              <!--end:Col-->
+                            </div>
+                            <!--end:Row-->
+
+                            <div class="separator separator-dashed mx-5 my-5"></div>
+
+                            <!--begin:Landing-->
+                            <div class="d-flex flex-stack flex-wrap flex-lg-nowrap gap-2 mx-5">
+                              <div class="d-flex flex-column me-5">
+                                <div class="fs-6 fw-bold text-gray-800">
+                                  Landing Page Template
+                                </div>
+                                <div class="fs-7 fw-semibold text-muted">
+                                  Onpe page landing template with pricing &amp; others
+                                </div>
+                              </div>
+
+                              <a href="/metronic8/demo1/../demo1/landing.html" class="btn btn-sm btn-primary fw-bold">
+                                Explore
+                              </a>
+                            </div>
+                            <!--end:Landing-->
+                          </div>
+                          <!--end:Col-->
+                        </div>
+                        <!--end:Row-->
+                      </div>
+                      <!--end:Dashboards menu-->
+                    </div>
+                    <!--end:Menu sub-->
+                  </div>
+                  <!--end:Menu item--><!--begin:Menu item-->
+                  <div data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="bottom-start" class="menu-item menu-lg-down-accordion me-0 me-lg-2">
+                    <!--begin:Menu link-->
+                    <span class="menu-link"><span class="menu-title">Pages</span><span class="menu-arrow d-lg-none"></span></span>
+                    <!--end:Menu link--><!--begin:Menu sub-->
+                    <div class="menu-sub menu-sub-lg-down-accordion menu-sub-lg-dropdown p-0" style="">
+                      <!--begin:Pages menu-->
+                      <div class="menu-active-bg px-4 px-lg-0">
+                        <!--begin:Tabs nav-->
+                        <div class="d-flex w-100 overflow-auto">
+                          <ul class="nav nav-stretch nav-line-tabs fw-bold fs-6 p-0 p-lg-10 flex-nowrap flex-grow-1" role="tablist">
+                            <!--begin:Nav item-->
+                            <li class="nav-item mx-lg-1" role="presentation">
+                              <a class="nav-link py-3 py-lg-6 active text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_pages" aria-selected="true" role="tab"> General </a>
+                            </li>
+                            <!--end:Nav item-->
+                            <!--begin:Nav item-->
+                            <li class="nav-item mx-lg-1" role="presentation">
+                              <a class="nav-link py-3 py-lg-6 text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_account" aria-selected="false" tabindex="-1" role="tab"> Account </a>
+                            </li>
+                            <!--end:Nav item-->
+                            <!--begin:Nav item-->
+                            <li class="nav-item mx-lg-1" role="presentation">
+                              <a class="nav-link py-3 py-lg-6 text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_authentication" aria-selected="false" tabindex="-1" role="tab"> Authentication </a>
+                            </li>
+                            <!--end:Nav item-->
+                            <!--begin:Nav item-->
+                            <li class="nav-item mx-lg-1" role="presentation">
+                              <a class="nav-link py-3 py-lg-6 text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_utilities" aria-selected="false" tabindex="-1" role="tab"> Utilities </a>
+                            </li>
+                            <!--end:Nav item-->
+                            <!--begin:Nav item-->
+                            <li class="nav-item mx-lg-1" role="presentation">
+                              <a class="nav-link py-3 py-lg-6 text-active-primary" href="#" data-bs-toggle="tab" data-bs-target="#kt_app_header_menu_pages_widgets" aria-selected="false" tabindex="-1" role="tab"> Widgets </a>
+                            </li>
+                            <!--end:Nav item-->
+                          </ul>
+                        </div>
+                        <!--end:Tabs nav-->
+
+                        <!--begin:Tab content-->
+                        <div class="tab-content py-4 py-lg-8 px-lg-7">
+                          <!--begin:Tab pane-->
+                          <div class="tab-pane active w-lg-1000px" id="kt_app_header_menu_pages_pages" role="tabpanel">
+                            <!--begin:Row-->
+                            <div class="row">
+                              <!--begin:Col-->
+                              <div class="col-lg-8">
+                                <!--begin:Row-->
+                                <div class="row">
+                                  <!--begin:Col-->
+                                  <div class="col-lg-3 mb-6 mb-lg-0">
+                                    <!--begin:Menu heading-->
+                                    <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">User Profile</h4>
+                                    <!--end:Menu heading-->
+
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item p-0 m-0">
+                                      <!--begin:Menu link-->
+                                      <a href="/metronic8/demo1/../demo1/pages/user-profile/overview.html" class="menu-link">
+                                        <span class="menu-title">Overview</span>
+                                      </a>
+                                      <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item p-0 m-0">
+                                      <!--begin:Menu link-->
+                                      <a href="#" class="menu-link zerodha-login-nav-btn fs-3 btn btn-flex btn-success hover-scale">
+                                        <span class="menu-title">
+                                          <i class="ki-duotone ki-fasten fs-3x text-info">
+                                            <i class="path1"></i>
+                                            <i class="path2"></i>
+                                          </i>
+                                          <span class="d-flex flex-column align-items-start ms-2">Login to Zerodha</span>
+                                        </span>
+                                      </a>
+                                      <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                  </div>
+                                  <!--end:Col-->
+
+                                  <!--begin:Col-->
+                                  <div class="col-lg-3 mb-6 mb-lg-0">
+                                    <!--begin:Menu section-->
+                                    <div class="mb-6">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Corporate</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/about.html" class="menu-link">
+                                          <span class="menu-title">About</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+
+                                    <!--begin:Menu section-->
+                                    <div class="mb-0">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Careers</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/careers/list.html" class="menu-link">
+                                          <span class="menu-title">Careers List</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/careers/apply.html" class="menu-link">
+                                          <span class="menu-title">Careers Apply</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+                                  </div>
+                                  <!--end:Col-->
+
+                                  <!--begin:Col-->
+                                  <div class="col-lg-3 mb-6 mb-lg-0">
+                                    <!--begin:Menu section-->
+                                    <div class="mb-6">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">FAQ</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/faq/classic.html" class="menu-link">
+                                          <span class="menu-title">FAQ Classic</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+
+                                    <!--begin:Menu section-->
+                                    <div class="mb-6">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Blog</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/blog/home.html" class="menu-link">
+                                          <span class="menu-title">Blog Home</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+
+                                    <!--begin:Menu section-->
+                                    <div class="mb-0">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Pricing</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/pricing/column.html" class="menu-link">
+                                          <span class="menu-title">Column Pricing</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+                                  </div>
+                                  <!--end:Col-->
+
+                                  <!--begin:Col-->
+                                  <div class="col-lg-3 mb-6 mb-lg-0">
+                                    <!--begin:Menu section-->
+                                    <div class="mb-0">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Social</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/pages/social/feeds.html" class="menu-link">
+                                          <span class="menu-title">Feeds</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+                                  </div>
+                                  <!--end:Col-->
+                                </div>
+                                <!--end:Row-->
+                              </div>
+                              <!--end:Col-->
+                            </div>
+                            <!--end:Row-->
+                          </div>
+                          <!--end:Tab pane-->
+
+                          <!--begin:Tab pane-->
+                          <div class="tab-pane w-lg-600px" id="kt_app_header_menu_pages_account" role="tabpanel">
+                            <!--begin:Row-->
+                            <div class="row">
+                              <!--begin:Col-->
+                              <div class="col-lg-5 mb-6 mb-lg-0">
+                                <!--begin:Row-->
+                                <div class="row">
+                                  <!--begin:Col-->
+                                  <div class="col-lg-6">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item p-0 m-0">
+                                      <!--begin:Menu link-->
+                                      <a href="/metronic8/demo1/../demo1/account/overview.html" class="menu-link">
+                                        <span class="menu-title">Overview</span>
+                                      </a>
+                                      <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                  </div>
+                                  <!--end:Col-->
+
+                                  <!--begin:Col-->
+                                  <div class="col-lg-6">
+                                    <!--begin:Menu item-->
+                                    <div class="menu-item p-0 m-0">
+                                      <!--begin:Menu link-->
+                                      <a href="/metronic8/demo1/../demo1/account/statements.html" class="menu-link">
+                                        <span class="menu-title">Statements</span>
+                                      </a>
+                                      <!--end:Menu link-->
+                                    </div>
+                                    <!--end:Menu item-->
+                                  </div>
+                                  <!--end:Col-->
+                                </div>
+                                <!--end:Row-->
+                              </div>
+                              <!--end:Col-->
+                            </div>
+                            <!--end:Row-->
+                          </div>
+                          <!--end:Tab pane-->
+
+                          <!--begin:Tab pane-->
+                          <div class="tab-pane w-lg-1000px" id="kt_app_header_menu_pages_authentication" role="tabpanel">
+                            <!--begin:Row-->
+                            <div class="row">
+                              <!--begin:Col-->
+                              <div class="col-lg-3 mb-6 mb-lg-0">
+                                <!--begin:Menu section-->
+                                <div class="mb-6">
+                                  <!--begin:Menu heading-->
+                                  <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Corporate Layout</h4>
+                                  <!--end:Menu heading-->
+
+                                  <!--begin:Menu item-->
+                                  <div class="menu-item p-0 m-0">
+                                    <!--begin:Menu link-->
+                                    <a href="/metronic8/demo1/../demo1/authentication/layouts/corporate/sign-in.html" class="menu-link">
+                                      <span class="menu-title">Sign-In</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                  </div>
+                                  <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu section-->
+
+                                <!--begin:Menu section-->
+                                <div class="mb-0">
+                                  <!--begin:Menu heading-->
+                                  <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Overlay Layout</h4>
+                                  <!--end:Menu heading-->
+
+                                  <!--begin:Menu item-->
+                                  <div class="menu-item p-0 m-0">
+                                    <!--begin:Menu link-->
+                                    <a href="/metronic8/demo1/../demo1/authentication/layouts/overlay/sign-in.html" class="menu-link">
+                                      <span class="menu-title">Sign-In</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                  </div>
+                                  <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu section-->
+                              </div>
+                              <!--end:Col-->
+
+                              <!--begin:Col-->
+                              <div class="col-lg-3 mb-6 mb-lg-0">
+                                <!--begin:Menu section-->
+                                <div class="mb-6">
+                                  <!--begin:Menu heading-->
+                                  <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Creative Layout</h4>
+                                  <!--end:Menu heading-->
+
+                                  <!--begin:Menu item-->
+                                  <div class="menu-item p-0 m-0">
+                                    <!--begin:Menu link-->
+                                    <a href="/metronic8/demo1/../demo1/authentication/layouts/creative/sign-in.html" class="menu-link">
+                                      <span class="menu-title">Sign-in</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                  </div>
+                                  <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu section-->
+
+                                <!--begin:Menu section-->
+                                <div class="mb-6">
+                                  <!--begin:Menu heading-->
+                                  <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Fancy Layout</h4>
+                                  <!--end:Menu heading-->
+
+                                  <!--begin:Menu item-->
+                                  <div class="menu-item p-0 m-0">
+                                    <!--begin:Menu link-->
+                                    <a href="/metronic8/demo1/../demo1/authentication/layouts/fancy/sign-in.html" class="menu-link">
+                                      <span class="menu-title">Sign-In</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                  </div>
+                                  <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu section-->
+                              </div>
+                              <!--end:Col-->
+
+                              <!--begin:Col-->
+                              <div class="col-lg-3 mb-6 mb-lg-0">
+                                <!--begin:Menu section-->
+                                <div class="mb-0">
+                                  <!--begin:Menu heading-->
+                                  <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">General</h4>
+                                  <!--end:Menu heading-->
+
+                                  <!--begin:Menu item-->
+                                  <div class="menu-item p-0 m-0">
+                                    <!--begin:Menu link-->
+                                    <a href="/metronic8/demo1/../demo1/authentication/extended/multi-steps-sign-up.html" class="menu-link">
+                                      <span class="menu-title">Multi-Steps Sign-Up</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                  </div>
+                                  <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu section-->
+                              </div>
+                              <!--end:Col-->
+
+                              <!--begin:Col-->
+                              <div class="col-lg-3 mb-6 mb-lg-0">
+                                <!--begin:Menu section-->
+                                <div class="mb-0">
+                                  <!--begin:Menu heading-->
+                                  <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Email Templates</h4>
+                                  <!--end:Menu heading-->
+
+                                  <!--begin:Menu item-->
+                                  <div class="menu-item p-0 m-0">
+                                    <!--begin:Menu link-->
+                                    <a href="/metronic8/demo1/../demo1/authentication/email/welcome-message.html" class="menu-link">
+                                      <span class="menu-title">Welcome Message</span>
+                                    </a>
+                                    <!--end:Menu link-->
+                                  </div>
+                                  <!--end:Menu item-->
+                                </div>
+                                <!--end:Menu section-->
+                              </div>
+                              <!--end:Col-->
+                            </div>
+                            <!--end:Row-->
+                          </div>
+                          <!--end:Tab pane-->
+
+                          <!--begin:Tab pane-->
+                          <div class="tab-pane w-lg-1000px" id="kt_app_header_menu_pages_utilities" role="tabpanel">
+                            <!--begin:Row-->
+                            <div class="row">
+                              <!--begin:Col-->
+                              <div class="col-lg-7">
+                                <!--begin:Row-->
+                                <div class="row">
+                                  <!--begin:Col-->
+                                  <div class="col-lg-4 mb-6 mb-lg-0">
+                                    <!--begin:Menu section-->
+                                    <div class="mb-0">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">General Modals</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/utilities/modals/general/invite-friends.html" class="menu-link">
+                                          <span class="menu-title">Invite Friends</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+                                  </div>
+                                  <!--end:Col-->
+
+                                  <!--begin:Col-->
+                                  <div class="col-lg-4 mb-6 mb-lg-0">
+                                    <!--begin:Menu section-->
+                                    <div class="mb-6">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Advanced Modals</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/utilities/modals/wizards/create-app.html" class="menu-link">
+                                          <span class="menu-title">Create App</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+
+                                    <!--begin:Menu section-->
+                                    <div class="mb-0">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Search</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/utilities/search/horizontal.html" class="menu-link">
+                                          <span class="menu-title">Horizontal</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+                                  </div>
+                                  <!--end:Col-->
+
+                                  <!--begin:Col-->
+                                  <div class="col-lg-4 mb-6 mb-lg-0">
+                                    <!--begin:Menu section-->
+                                    <div class="mb-0">
+                                      <!--begin:Menu heading-->
+                                      <h4 class="fs-6 fs-lg-4 fw-bold mb-3 ms-4">Wizards</h4>
+                                      <!--end:Menu heading-->
+
+                                      <!--begin:Menu item-->
+                                      <div class="menu-item p-0 m-0">
+                                        <!--begin:Menu link-->
+                                        <a href="/metronic8/demo1/../demo1/utilities/wizards/horizontal.html" class="menu-link">
+                                          <span class="menu-title">Horizontal</span>
+                                        </a>
+                                        <!--end:Menu link-->
+                                      </div>
+                                      <!--end:Menu item-->
+                                    </div>
+                                    <!--end:Menu section-->
+                                  </div>
+                                  <!--end:Col-->
+                                </div>
+                                <!--end:Row-->
+                              </div>
+                              <!--end:Col-->
+                            </div>
+                            <!--end:Row-->
+                          </div>
+                          <!--end:Tab pane-->
+
+                          <!--begin:Tab pane-->
+                          <div class="tab-pane w-lg-500px" id="kt_app_header_menu_pages_widgets" role="tabpanel">
+                            <!--begin:Row-->
+                            <div class="row">
+                              <!--begin:Col-->
+                              <div class="col-lg-4 mb-6 mb-lg-0">
+                                <!--begin:Menu item-->
+                                <div class="menu-item p-0 m-0">
+                                  <!--begin:Menu link-->
+                                  <a href="/metronic8/demo1/../demo1/widgets/lists.html" class="menu-link">
+                                    <span class="menu-title">Lists</span>
+                                  </a>
+                                  <!--end:Menu link-->
+                                </div>
+                                <!--end:Menu item-->
+                              </div>
+                              <!--end:Col-->
+
+                            </div>
+                            <!--end:Row-->
+                          </div>
+                          <!--end:Tab pane-->
+                        </div>
+                        <!--end:Tab content-->
+                      </div>
+                      <!--end:Pages menu-->
+                    </div>
+                    <!--end:Menu sub-->
+                  </div>
+                  <!--end:Menu item-->
+                </div>
+                <!--end::Menu-->
+              </div>
+              <!--end::Menu wrapper-->
+
+              <!--begin::Navbar-->
+              <div class="app-navbar flex-shrink-0">
+                <!--begin::Search-->
+                <div class="app-navbar-item align-items-stretch ms-1 ms-md-3">
+                  <!--begin::Search-->
+                  <div
+                    id="kt_header_search"
+                    class="header-search d-flex align-items-stretch"
+                    data-kt-search-keypress="true"
+                    data-kt-search-min-length="2"
+                    data-kt-search-enter="enter"
+                    data-kt-search-layout="menu"
+                    data-kt-menu-trigger="auto"
+                    data-kt-menu-overflow="false"
+                    data-kt-menu-permanent="true"
+                    data-kt-menu-placement="bottom-end"
+                  >
+                    <!--begin::Search toggle-->
+                    <div class="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_search_toggle">
+                      <div class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px">
+                        <i class="ki-duotone ki-magnifier fs-2 fs-lg-1"><span class="path1"></span><span class="path2"></span></i>
+                      </div>
+                    </div>
+                    <!--end::Search toggle-->
+
+                    <!--begin::Menu-->
+                    <div data-kt-search-element="content" class="menu menu-sub menu-sub-dropdown p-7 w-325px w-md-375px">
+                      <!--begin::Wrapper-->
+                      <div data-kt-search-element="wrapper">
+                        <!--begin::Form-->
+                        <form data-kt-search-element="form" class="w-100 position-relative mb-3" autocomplete="off">
+                          <!--begin::Icon-->
+                          <i class="ki-duotone ki-magnifier fs-2 text-gray-500 position-absolute top-50 translate-middle-y ms-0"><span class="path1"></span><span class="path2"></span></i>
+                          <!--end::Icon-->
+
+                          <!--begin::Input-->
+                          <input type="text" class="search-input form-control form-control-flush ps-10" name="search" value="" placeholder="Search..." data-kt-search-element="input" />
+                          <!--end::Input-->
+
+                          <!--begin::Spinner-->
+                          <span class="search-spinner position-absolute top-50 end-0 translate-middle-y lh-0 d-none me-1" data-kt-search-element="spinner">
+                            <span class="spinner-border h-15px w-15px align-middle text-gray-400"></span>
+                          </span>
+                          <!--end::Spinner-->
+
+                          <!--begin::Reset-->
+                          <span class="search-reset btn btn-flush btn-active-color-primary position-absolute top-50 end-0 translate-middle-y lh-0 d-none" data-kt-search-element="clear">
+                            <i class="ki-duotone ki-cross fs-2 fs-lg-1 me-0"><span class="path1"></span><span class="path2"></span></i>
+                          </span>
+                          <!--end::Reset-->
+                        </form>
+                        <!--end::Form-->
+
+                        <!--begin::Separator-->
+                        <div class="separator border-gray-200 mb-6"></div>
+                        <!--end::Separator-->
+                        <!--begin::Recently viewed-->
+                        <div data-kt-search-element="results" class="d-none">
+                          <!--begin::Items-->
+                          <div class="scroll-y mh-200px mh-lg-350px">
+                            <!--begin::Category title-->
+                            <h3 class="fs-5 text-muted m-0 pb-5" data-kt-search-element="category-title">
+                              Users
+                            </h3>
+                            <!--end::Category title-->
+
+                            <!--begin::Item-->
+                            <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
+                              <!--begin::Symbol-->
+                              <div class="symbol symbol-40px me-4">
+                                <img src="{% static 'media/avatars/300-6.jpg' %}" alt="" />
+                              </div>
+                              <!--end::Symbol-->
+
+                              <!--begin::Title-->
+                              <div class="d-flex flex-column justify-content-start fw-semibold">
+                                <span class="fs-6 fw-semibold">Karina Clark</span>
+                                <span class="fs-7 fw-semibold text-muted">Marketing Manager</span>
+                              </div>
+                              <!--end::Title-->
+                            </a>
+                            <!--end::Item-->
+
+                            <!--begin::Item-->
+                            <a href="#" class="d-flex text-dark text-hover-primary align-items-center mb-5">
+                              <!--begin::Symbol-->
+                              <div class="symbol symbol-40px me-4">
+                                <img src="{% static 'media/avatars/300-2.jpg' %}" alt="" />
+                              </div>
+                              <!--end::Symbol-->
+
+                              <!--begin::Title-->
+                              <div class="d-flex flex-column justify-content-start fw-semibold">
+                                <span class="fs-6 fw-semibold">Olivia Bold</span>
+                                <span class="fs-7 fw-semibold text-muted">Software Engineer</span>
+                              </div>
+                              <!--end::Title-->
+                            </a>
+                            <!--end::Item-->
+                          </div>
+                          <!--end::Items-->
+                        </div>
+                        <!--end::Recently viewed-->
+
+                        <!--begin::Recently viewed-->
+                        <div class="mb-5" data-kt-search-element="main">
+                          <!--begin::Heading-->
+                          <div class="d-flex flex-stack fw-semibold mb-4">
+                            <!--begin::Label-->
+                            <span class="text-muted fs-6 me-2">Recently Searched:</span>
+                            <!--end::Label-->
+                          </div>
+                          <!--end::Heading-->
+
+                          <!--begin::Items-->
+                          <div class="scroll-y mh-200px mh-lg-325px">
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center mb-5">
+                              <!--begin::Symbol-->
+                              <div class="symbol symbol-40px me-4">
+                                <span class="symbol-label bg-light">
+                                  <i class="ki-duotone ki-laptop fs-2 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                </span>
+                              </div>
+                              <!--end::Symbol-->
+
+                              <!--begin::Title-->
+                              <div class="d-flex flex-column">
+                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-semibold">BoomApp by Keenthemes</a>
+                                <span class="fs-7 text-muted fw-semibold">#45789</span>
+                              </div>
+                              <!--end::Title-->
+                            </div>
+                            <!--end::Item-->
+                            <!--begin::Item-->
+                            <div class="d-flex align-items-center mb-5">
+                              <!--begin::Symbol-->
+                              <div class="symbol symbol-40px me-4">
+                                <span class="symbol-label bg-light">
+                                  <i class="ki-duotone ki-chart-simple fs-2 text-primary"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                </span>
+                              </div>
+                              <!--end::Symbol-->
+
+                              <!--begin::Title-->
+                              <div class="d-flex flex-column">
+                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-semibold">"Kept API Project Meeting</a>
+                                <span class="fs-7 text-muted fw-semibold">#84050</span>
+                              </div>
+                              <!--end::Title-->
+                            </div>
+                            <!--end::Item-->
+                          </div>
+                          <!--end::Items-->
+                        </div>
+                        <!--end::Recently viewed-->
+
+                        <!--begin::Empty-->
+                        <div data-kt-search-element="empty" class="text-center d-none">
+                          <!--begin::Icon-->
+                          <div class="pt-10 pb-10">
+                            <i class="ki-duotone ki-search-list fs-4x opacity-50"><span class="path1"></span><span class="path2"></span><span class="path3"></span></i>
+                          </div>
+                          <!--end::Icon-->
+
+                          <!--begin::Message-->
+                          <div class="pb-15 fw-semibold">
+                            <h3 class="text-gray-600 fs-5 mb-2">No result found</h3>
+                            <div class="text-muted fs-7">Please try again with a different query</div>
+                          </div>
+                          <!--end::Message-->
+                        </div>
+                        <!--end::Empty-->
+                      </div>
+                      <!--end::Wrapper-->
+                    </div>
+                    <!--end::Menu-->
+                  </div>
+                  <!--end::Search-->
+                </div>
+                <!--end::Search-->
+
+                <!--begin::Notifications-->
+                <div class="app-navbar-item ms-1 ms-md-3">
+                  <!--begin::Menu- wrapper-->
+                  <div
+                    class="btn btn-icon btn-custom btn-icon-muted btn-active-light btn-active-color-primary w-30px h-30px w-md-40px h-md-40px"
+                    data-kt-menu-trigger="{default: 'click', lg: 'hover'}"
+                    data-kt-menu-attach="parent"
+                    data-kt-menu-placement="bottom-end"
+                    id="kt_menu_item_wow"
+                  >
+                    <i class="ki-duotone ki-notification-status fs-2 fs-lg-1"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                  </div>
+
+                  <!--begin::Menu-->
+                  <div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true" id="kt_menu_notifications">
+                    <!--begin::Heading-->
+                    <div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image: url({% static 'media/misc/menu-header-bg.jpg' %});">
+                      <!--begin::Title-->
+                      <h3 class="text-white fw-semibold px-9 mt-10 mb-6">Notifications <span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
+                      <!--end::Title-->
+
+                      <!--begin::Tabs-->
+                      <ul class="nav nav-line-tabs nav-line-tabs-2x nav-stretch fw-semibold px-9" role="tablist">
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link text-white opacity-75 opacity-state-100 pb-4" data-bs-toggle="tab" href="#kt_topbar_notifications_1" aria-selected="false" tabindex="-1" role="tab">Alerts</a>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link text-white opacity-75 opacity-state-100 pb-4 active" data-bs-toggle="tab" href="#kt_topbar_notifications_2" aria-selected="true" role="tab">Updates</a>
+                        </li>
+
+                        <li class="nav-item" role="presentation">
+                          <a class="nav-link text-white opacity-75 opacity-state-100 pb-4" data-bs-toggle="tab" href="#kt_topbar_notifications_3" aria-selected="false" tabindex="-1" role="tab">Logs</a>
+                        </li>
+                      </ul>
+                      <!--end::Tabs-->
+                    </div>
+                    <!--end::Heading-->
+
+                    <!--begin::Tab content-->
+                    <div class="tab-content">
+                      <!--begin::Tab panel-->
+                      <div class="tab-pane fade" id="kt_topbar_notifications_1" role="tabpanel">
+                        <!--begin::Items-->
+                        <div class="scroll-y mh-325px my-5 px-8">
+                          <!--begin::Item-->
+                          <div class="d-flex flex-stack py-4">
+                            <!--begin::Section-->
+                            <div class="d-flex align-items-center">
+                              <!--begin::Symbol-->
+                              <div class="symbol symbol-35px me-4">
+                                <span class="symbol-label bg-light-primary">
+                                  <i class="ki-duotone ki-abstract-28 fs-2 text-primary"><span class="path1"></span><span class="path2"></span></i>
+                                </span>
+                              </div>
+                              <!--end::Symbol-->
+
+                              <!--begin::Title-->
+                              <div class="mb-0 me-2">
+                                <a href="#" class="fs-6 text-gray-800 text-hover-primary fw-bold">Project Alice</a>
+                                <div class="text-gray-400 fs-7">Phase 1 development</div>
+                              </div>
+                              <!--end::Title-->
+                            </div>
+                            <!--end::Section-->
+
+                            <!--begin::Label-->
+                            <span class="badge badge-light fs-8">1 hr</span>
+                            <!--end::Label-->
+                          </div>
+                          <!--end::Item-->
+                        </div>
+                        <!--end::Items-->
+
+                        <!--begin::View more-->
+                        <div class="py-3 text-center border-top">
+                          <a href="/metronic8/demo1/../demo1/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">
+                            View All
+                            <i class="ki-duotone ki-arrow-right fs-5"><span class="path1"></span><span class="path2"></span></i>
+                          </a>
+                        </div>
+                        <!--end::View more-->
+                      </div>
+                      <!--end::Tab panel-->
+
+                      <!--begin::Tab panel-->
+                      <div class="tab-pane fade show active" id="kt_topbar_notifications_2" role="tabpanel">
+                        <!--begin::Wrapper-->
+                        <div class="d-flex flex-column px-9">
+                          <!--begin::Section-->
+                          <div class="pt-10 pb-0">
+                            <!--begin::Title-->
+                            <h3 class="text-dark text-center fw-bold">
+                              Get Pro Access
+                            </h3>
+                            <!--end::Title-->
+
+                            <!--begin::Text-->
+                            <div class="text-center text-gray-600 fw-semibold pt-1">
+                              Outlines keep you honest. They stoping you from amazing poorly about drive
+                            </div>
+                            <!--end::Text-->
+
+                            <!--begin::Action-->
+                            <div class="text-center mt-5 mb-9">
+                              <a href="#" class="btn btn-sm btn-primary px-6" data-bs-toggle="modal" data-bs-target="#kt_modal_upgrade_plan">Upgrade</a>
+                            </div>
+                            <!--end::Action-->
+                          </div>
+                          <!--end::Section-->
+                        </div>
+                        <!--end::Wrapper-->
+                      </div>
+                      <!--end::Tab panel-->
+
+                      <!--begin::Tab panel-->
+                      <div class="tab-pane fade" id="kt_topbar_notifications_3" role="tabpanel">
+                        <!--begin::Items-->
+                        <div class="scroll-y mh-325px my-5 px-8">
+                          <!--begin::Item-->
+                          <div class="d-flex flex-stack py-4">
+                            <!--begin::Section-->
+                            <div class="d-flex align-items-center me-2">
+                              <!--begin::Code-->
+                              <span class="w-70px badge badge-light-success me-4">200 OK</span>
+                              <!--end::Code-->
+
+                              <!--begin::Title-->
+                              <a href="#" class="text-gray-800 text-hover-primary fw-semibold">New order</a>
+                              <!--end::Title-->
+                            </div>
+                            <!--end::Section-->
+
+                            <!--begin::Label-->
+                            <span class="badge badge-light fs-8">Just now</span>
+                            <!--end::Label-->
+                          </div>
+                          <!--end::Item-->
+                        </div>
+                        <!--end::Items-->
+
+                        <!--begin::View more-->
+                        <div class="py-3 text-center border-top">
+                          <a href="/metronic8/demo1/../demo1/pages/user-profile/activity.html" class="btn btn-color-gray-600 btn-active-color-primary">
+                            View All
+                            <i class="ki-duotone ki-arrow-right fs-5"><span class="path1"></span><span class="path2"></span></i>
+                          </a>
+                        </div>
+                        <!--end::View more-->
+                      </div>
+                      <!--end::Tab panel-->
+                    </div>
+                    <!--end::Tab content-->
+                  </div>
+                  <!--end::Menu-->
+                  <!--end::Menu wrapper-->
+                </div>
+                <!--end::Notifications-->
+
+                <!--begin::User menu-->
+                <div class="app-navbar-item ms-1 ms-md-3" id="kt_header_user_menu_toggle">
+                  <!--begin::Menu wrapper-->
+                  <div class="cursor-pointer symbol symbol-30px symbol-md-40px" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">
+                    <img src="{% static 'media/avatars/300-1.jpg' %}" alt="user" />
+                  </div>
+
+                  <!--begin::User account menu-->
+                  <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg menu-state-color fw-semibold py-4 fs-6 w-275px" data-kt-menu="true">
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-3">
+                      <div class="menu-content d-flex align-items-center px-3">
+                        <!--begin::Avatar-->
+                        <div class="symbol symbol-50px me-5">
+                          <img alt="Logo" src="{% static 'media/avatars/300-1.jpg' %}" />
+                        </div>
+                        <!--end::Avatar-->
+
+                        <!--begin::Username-->
+                        <div class="d-flex flex-column">
+                          <div class="fw-bold d-flex align-items-center fs-5">Max Smith <span class="badge badge-light-success fw-bold fs-8 px-2 py-1 ms-2">Pro</span></div>
+
+                          <a href="#" class="fw-semibold text-muted text-hover-primary fs-7"> max@kt.com </a>
+                        </div>
+                        <!--end::Username-->
+                      </div>
+                    </div>
+                    <!--end::Menu item-->
+
+                    <!--begin::Menu separator-->
+                    <div class="separator my-2"></div>
+                    <!--end::Menu separator-->
+
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-5">
+                      <a href="/metronic8/demo1/../demo1/account/overview.html" class="menu-link px-5">
+                        My Profile
+                      </a>
+                    </div>
+                    <!--end::Menu item-->
+
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
+                      <a href="#" class="menu-link px-5">
+                        <span class="menu-title">My Subscription</span>
+                        <span class="menu-arrow"></span>
+                      </a>
+
+                      <!--begin::Menu sub-->
+                      <div class="menu-sub menu-sub-dropdown w-175px py-4">
+                        <!--begin::Menu item-->
+                        <div class="menu-item px-3">
+                          <a href="/metronic8/demo1/../demo1/account/referrals.html" class="menu-link px-5">
+                            Referrals
+                          </a>
+                        </div>
+                        <!--end::Menu item-->
+                      </div>
+                      <!--end::Menu sub-->
+                    </div>
+                    <!--end::Menu item-->
+
+                    <!--begin::Menu separator-->
+                    <div class="separator my-2"></div>
+                    <!--end::Menu separator-->
+
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-5" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-placement="left-start" data-kt-menu-offset="-15px, 0">
+                      <a href="#" class="menu-link px-5">
+                        <span class="menu-title position-relative">
+                          Language
+
+                          <span class="fs-8 rounded bg-light px-3 py-2 position-absolute translate-middle-y top-50 end-0">
+                            English <img class="w-15px h-15px rounded-1 ms-2" src="{% static 'media/flags/india.svg' %}" alt="" />
+                          </span>
+                        </span>
+                      </a>
+                    </div>
+                    <!--end::Menu item-->
+
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-5 my-1">
+                      <a href="/metronic8/demo1/../demo1/account/settings.html" class="menu-link px-5">
+                        Account Settings
+                      </a>
+                    </div>
+                    <!--end::Menu item-->
+
+                    <!--begin::Menu item-->
+                    <div class="menu-item px-5">
+                      <a href="/metronic8/demo1/../demo1/authentication/layouts/corporate/sign-in.html" class="menu-link px-5">
+                        Sign Out
+                      </a>
+                    </div>
+                    <!--end::Menu item-->
+                  </div>
+                  <!--end::User account menu-->
+                  <!--end::Menu wrapper-->
+                </div>
+                <!--end::User menu-->
+
+                <!--begin::Header menu toggle-->
+                <div class="app-navbar-item d-lg-none ms-2 me-n2" title="Show header menu">
+                  <div class="btn btn-flex btn-icon btn-active-color-primary w-30px h-30px" id="kt_app_header_menu_toggle">
+                    <i class="ki-duotone ki-element-4 fs-1"><span class="path1"></span><span class="path2"></span></i>
+                  </div>
+                </div>
+                <!--end::Header menu toggle-->
+              </div>
+              <!--end::Navbar-->
+            </div>
+            <!--end::Header wrapper-->
           </div>
-
-          <a class="zerodha-login-nav-btn btn btn-danger btn-hover-scale me-5 fs-6 disabled" href="#">
-            <span class="svg-icon svg-icon-2x">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M13 9V8C13 7.4 13.4 7 14 7H15C16.7 7 18 5.7 18 4V3C18 2.4 17.6 2 17 2C16.4 2 16 2.4 16 3V4C16 4.6 15.6 5 15 5H14C12.3 5 11 6.3 11 8V9H13Z" fill="currentColor"/>
-              <path opacity="0.3" d="M21 22H3C2.4 22 2 21.6 2 21V10C2 9.4 2.4 9 3 9H21C21.6 9 22 9.4 22 10V21C22 21.6 21.6 22 21 22ZM5 12C4.4 12 4 12.4 4 13C4 13.6 4.4 14 5 14C5.6 14 6 13.6 6 13C6 12.4 5.6 12 5 12ZM8 12C7.4 12 7 12.4 7 13C7 13.6 7.4 14 8 14C8.6 14 9 13.6 9 13C9 12.4 8.6 12 8 12ZM11 12C10.4 12 10 12.4 10 13C10 13.6 10.4 14 11 14C11.6 14 12 13.6 12 13C12 12.4 11.6 12 11 12ZM14 12C13.4 12 13 12.4 13 13C13 13.6 13.4 14 14 14C14.6 14 15 13.6 15 13C15 12.4 14.6 12 14 12ZM9 15C8.4 15 8 15.4 8 16C8 16.6 8.4 17 9 17C9.6 17 10 16.6 10 16C10 15.4 9.6 15 9 15ZM12 15C11.4 15 11 15.4 11 16C11 16.6 11.4 17 12 17C12.6 17 13 16.6 13 16C13 15.4 12.6 15 12 15ZM15 15C14.4 15 14 15.4 14 16C14 16.6 14.4 17 15 17C15.6 17 16 16.6 16 16C16 15.4 15.6 15 15 15ZM19 18C18.4 18 18 18.4 18 19C18 19.6 18.4 20 19 20C19.6 20 20 19.6 20 19C20 18.4 19.6 18 19 18ZM7 19C7 18.4 6.6 18 6 18H5C4.4 18 4 18.4 4 19C4 19.6 4.4 20 5 20H6C6.6 20 7 19.6 7 19ZM7 16C7 15.4 6.6 15 6 15H5C4.4 15 4 15.4 4 16C4 16.6 4.4 17 5 17H6C6.6 17 7 16.6 7 16ZM17 14H19C19.6 14 20 13.6 20 13C20 12.4 19.6 12 19 12H17C16.4 12 16 12.4 16 13C16 13.6 16.4 14 17 14ZM18 17H19C19.6 17 20 16.6 20 16C20 15.4 19.6 15 19 15H18C17.4 15 17 15.4 17 16C17 16.6 17.4 17 18 17ZM17 19C17 18.4 16.6 18 16 18H9C8.4 18 8 18.4 8 19C8 19.6 8.4 20 9 20H16C16.6 20 17 19.6 17 19Z" fill="currentColor"/>
-              </svg>
-            </span>
-            Login to Zerodha
-          </a>
+          <!--end::Header container-->
         </div>
-      </div>
-    </nav>
+        <!--end::Header-->
 
-    <main class="container-fluid">
-      <div class="row">
-        <div class="container">{% block content %}{% endblock %}</div>
+        <!--begin::Wrapper-->
+        <div class="app-wrapper flex-column flex-row-fluid" id="kt_app_wrapper">
+          <!--begin::Main-->
+          <div class="app-main flex-column flex-row-fluid" id="kt_app_main">
+            <!--begin::Content wrapper-->
+            <div class="d-flex flex-column flex-column-fluid">
+              <!--begin::Content-->
+              <div id="kt_app_content" class="app-content flex-column-fluid">
+                <!--begin::Content container-->
+                <div id="kt_app_content_container" class="app-container container-xxl">
+                  {% block content %} {% endblock %}
+                </div>
+                <!--end::Content container-->
+              </div>
+              <!--end::Content-->
+            </div>
+            <!--end::Content wrapper-->
+          </div>
+          <!--end:::Main-->
+        </div>
+        <!--end::Wrapper-->
       </div>
-    </main>
+      <!--end::Page-->
+    </div>
+    <!--end::App-->
+
+
 
     {% block scripts %} {% endblock %}
 
+    <!-- Begin my JS -->
     <script type="text/javascript">
       "use strict";
       $(document).ready(function() {
@@ -83,5 +1177,6 @@
         });
       });
     </script>
+    <!-- End my js -->
   </body>
 </html>

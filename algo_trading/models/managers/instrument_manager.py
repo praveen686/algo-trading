@@ -36,7 +36,7 @@ class InstrumentManager(models.Manager):
             The instrument matching the symbol, irrespective of case
         """
         try:
-            return super().get_queryset().get(symbol__iexact=symbol)
+            return super().get_queryset().get(trading_symbol__iexact=symbol)
         except self.model.DoesNotExist:
             raise Http404("No Instrument matches the given symbol.")
 
@@ -224,3 +224,38 @@ class InstrumentManager(models.Manager):
         daily_data_rel.bulk_create(
             daily_data_rel.model(**vals) for vals in ohlc_df.to_dict('records')
         )
+
+    def load_bulk_instruments(self, instruments_from_exchange: list) -> list:
+        """Loads instruments available from the exchange into our DB.
+
+        Given an array of instruments, they're loaded into our DB if they're not present already.
+        Existing instruments are skipped over.
+
+        Parameters
+        ----------
+        instruments_from_exchange: Array<dict>
+            Array of objects containing info about the instruments available to trade on that exchange
+
+        Creates
+        -------
+
+
+        Returns
+        -------
+        List of all instruments either created or found
+        """
+        created_instruments = 0
+
+        for instrument_info in instruments_from_exchange:
+            instrument_info['symbol'] = instrument_info['tradingsymbol']
+            instrument_info['trading_symbol'] = instrument_info['tradingsymbol']
+            del instrument_info['tradingsymbol']
+            del instrument_info['last_price']
+
+            try:
+                self.create(**instrument_info)
+                created_instruments += 1
+            except IntegrityError:
+                pass
+
+        return created_instruments

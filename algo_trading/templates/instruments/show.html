@@ -4,12 +4,20 @@
 
 {% block content %}
   <div class="container">
-    <h2>Details for {{ instrument.get_instrument_type_display }}: {{ instrument.symbol }}</h2>
+    <h2>Details for {{ instrument.get_instrument_type_display }}: {{ instrument.trading_symbol }}</h2>
 
     <p>
-      <p>Symbol: {{ instrument.symbol }}</p>
-      <p>Name: {{ instrument.descriptive_name }}</p>
-      <p>First Open Date: {{ instrument.first_open_date }}</p>
+      <p>Symbol: {{ instrument.trading_symbol }}</p>
+      <p>Name: {{ instrument.name }}</p>
+      <p>Exchange: {{ instrument.exchange }}</p>
+      <p>Instrument Type: {{ instrument.instrument_type }}</p>
+      <p>Segment:{{ instrument.segment }}</p>
+      <p>Expiry:{{ instrument.expiry }}</p>
+      <p>Lot Size: {{ instrument.lot_size }}</p>
+      <p>Tick Size: {{ instrument.tick_size }}</p>
+      <p>Strike: {{ instrument.strike }}</p>
+      <p>Exchange Token: {{ instrument.exchange_token }}</p>
+      <p>Instrument Token: {{ instrument.instrument_token }}</p>
     </p>
 
     {% if daily_data.count > 0 %}

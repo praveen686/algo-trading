@@ -7,8 +7,15 @@
         <th>#</th>
         <th>Symbol</th>
         <th>Name</th>
-        <th>First Open Date</th>
+        <th>Exchange</th>
         <th>Instrument Type</th>
+        <th>Segment</th>
+        <th>Expiry</th>
+        <th>Lot Size</th>
+        <th>Tick Size</th>
+        <th>Strike</th>
+        <th>Exchange Token</th>
+        <th>Instrument Token</th>
       </tr>
     </thead>
 
@@ -18,12 +25,19 @@
           <td>{{ forloop.counter }}</td>
           <td>
             <a href={% url "instrument-symbol" instrument.symbol %}>
-              {{ instrument.symbol }}
+              {{ instrument.trading_symbol }}
             </a>
           </td>
-          <td>{{ instrument.descriptive_name }}</td>
-          <td>{{ instrument.first_open_date }}</td>
+          <td>{{ instrument.name }}</td>
+          <td>{{ instrument.exchange }}</td>
           <td>{{ instrument.instrument_type }}</td>
+          <td>{{ instrument.segment }}</td>
+          <td>{{ instrument.expiry }}</td>
+          <td>{{ instrument.lot_size }}</td>
+          <td>{{ instrument.tick_size }}</td>
+          <td>{{ instrument.strike }}</td>
+          <td>{{ instrument.exchange_token }}</td>
+          <td>{{ instrument.instrument_token }}</td>
         </tr>
       {% endfor %}
     </tbody>

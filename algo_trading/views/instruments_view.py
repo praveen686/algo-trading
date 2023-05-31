@@ -88,7 +88,7 @@ def add_instruments(request):
 
 @require_http_methods(["GET"])
 def list_instruments(request):
-    instruments = Instrument.objects.all()
+    instruments = Instrument.objects.filter()[:100]
 
     return render(
         request,

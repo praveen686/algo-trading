@@ -31,4 +31,6 @@ def zerodha_req_token(request):
 def zerodha_instruments(request):
     kite = KiteBroker()
 
-    return JsonResponse({'size': len(kite.instruments('NSE'))})
+    count = kite.load_instruments_for_today()
+
+    return JsonResponse({'size': count})

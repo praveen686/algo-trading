@@ -1,0 +1,14 @@
+[tool.isort]
+profile = "black"
+skip_gitignore = True
+line-length = 88
+exclude = '''
+/(
+  \.toml
+  |\.sh
+  |\.git
+  |\.ini
+  |Dockerfile
+  |Jenkinfile
+)/
+'''

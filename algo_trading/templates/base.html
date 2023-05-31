@@ -200,8 +200,8 @@
                                     <!--begin:Menu item-->
                                     <div class="menu-item p-0 m-0">
                                       <!--begin:Menu link-->
-                                      <a href="/metronic8/demo1/../demo1/pages/user-profile/overview.html" class="menu-link">
-                                        <span class="menu-title">Overview</span>
+                                      <a href="{% url 'place-options-call' %}" class="menu-link">
+                                        <span class="menu-title">Place a New Options Call</span>
                                       </a>
                                       <!--end:Menu link-->
                                     </div>
@@ -1141,6 +1141,7 @@
               <div id="kt_app_content" class="app-content flex-column-fluid">
                 <!--begin::Content container-->
                 <div id="kt_app_content_container" class="app-container container-xxl">
+                  <!-- This is where each page goes -->
                   {% block content %} {% endblock %}
                 </div>
                 <!--end::Content container-->

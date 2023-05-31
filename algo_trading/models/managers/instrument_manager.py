@@ -1,18 +1,20 @@
 import datetime
 
-from django.http import Http404
-from django.db import models, IntegrityError
-import yfinance as yf
 import pandas as pd
+import yfinance as yf
+from django.db import IntegrityError, models
+from django.http import Http404
 
-from ...exceptions.instruments.invalid_ticker_symbol_error import InvalidTickerSymbolError
+from ...exceptions.instruments.invalid_ticker_symbol_error import (
+    InvalidTickerSymbolError,
+)
 
 
 class InstrumentManager(models.Manager):
-    KEY_FOR_SYMBOL_IN_INFO = 'symbol'
-    KEY_FOR_DESCRIPTIVE_NAME_IN_INFO = 'longName'
-    KEY_FOR_FIRST_OPEN_DATE_IN_INFO = 'firstTradeDateMilliseconds'
-    KEY_FOR_INSTRUMENT_TYPE_IN_INFO = 'typeDisp'
+    KEY_FOR_SYMBOL_IN_INFO = "symbol"
+    KEY_FOR_DESCRIPTIVE_NAME_IN_INFO = "longName"
+    KEY_FOR_FIRST_OPEN_DATE_IN_INFO = "firstTradeDateMilliseconds"
+    KEY_FOR_INSTRUMENT_TYPE_IN_INFO = "typeDisp"
 
     def get_by_symbol(self, symbol: str):
         """Get an instrument by its symbol, irrespective of case
@@ -69,18 +71,20 @@ class InstrumentManager(models.Manager):
             try:
                 created_symbols.append(self.import_symbol_from_yf(symbol))
             except InvalidTickerSymbolError:
-                failed_symbols.append({'symbol': symbol, 'reason': "Symbol is invalid"})
+                failed_symbols.append({"symbol": symbol, "reason": "Symbol is invalid"})
             except IntegrityError:
-                failed_symbols.append({'symbol': symbol, 'reason': "Instrument already exists"})
+                failed_symbols.append(
+                    {"symbol": symbol, "reason": "Instrument already exists"}
+                )
             except Exception as exc:
-                failed_symbols.append({'symbol': symbol, 'reason': exc.args})
+                failed_symbols.append({"symbol": symbol, "reason": exc.args})
 
             # Any possible error for each symbol is handled and an appropriate msg is generated.
             # Whether any one symbol passes or fails, the import continues on for the rest of the symbols.
             continue
 
-        import_summary['failed'] = failed_symbols
-        import_summary['created'] = created_symbols
+        import_summary["failed"] = failed_symbols
+        import_summary["created"] = created_symbols
 
         return import_summary
 
@@ -147,13 +151,19 @@ class InstrumentManager(models.Manager):
             # Normalize API response to model specific formats
             # Convert date from epoch time in ms to python date format
             # Convert type from the string +Equity+ to its matching label in choices +EQ+
-            first_open_date_from_info = instrument_info[self.KEY_FOR_FIRST_OPEN_DATE_IN_INFO] / 1000
+            first_open_date_from_info = (
+                instrument_info[self.KEY_FOR_FIRST_OPEN_DATE_IN_INFO] / 1000
+            )
             first_open_date = datetime.datetime.fromtimestamp(first_open_date_from_info)
 
-            instrument_type_from_info = instrument_info[self.KEY_FOR_INSTRUMENT_TYPE_IN_INFO]
+            instrument_type_from_info = instrument_info[
+                self.KEY_FOR_INSTRUMENT_TYPE_IN_INFO
+            ]
 
             # Convert value from api as 'Equity' to its key 'EQ' from Instrument
-            instrument_type = {i.label: i.value for i in self.model.InstrumentType}[instrument_type_from_info] # noqa
+            instrument_type = {i.label: i.value for i in self.model.InstrumentType}[
+                instrument_type_from_info
+            ]  # noqa
 
             return self.create(
                 symbol=instrument_info[self.KEY_FOR_SYMBOL_IN_INFO],
@@ -164,7 +174,7 @@ class InstrumentManager(models.Manager):
         except AttributeError as error:
             # If the symbol was invalid, ticker.info raises an AttributeError with
             # NoneType in the error message
-            if 'NoneType' in error.args[0]:
+            if "NoneType" in error.args[0]:
                 raise InvalidTickerSymbolError
             else:
                 # If there were any other AttributeError's, we pass them on to the caller of this method
@@ -208,21 +218,25 @@ class InstrumentManager(models.Manager):
         # This DF may have rows with empty values in some columns, dropping rows with any NaN's.
         # This DF has the date as the index, which we need to capture as a column for each entry
         # So we need to reset the index on the DF.
-        ohlc_df = ohlc_df.reset_index().dropna(how='any')
+        ohlc_df = ohlc_df.reset_index().dropna(how="any")
         ohlc_df = ohlc_df.drop(["Volume", "Dividends", "Stock Splits"], axis=1)
-        ohlc_df = ohlc_df.rename(columns={
-            "Date": "date",
-            "Open": "open",
-            "High": "high",
-            "Low": "low",
-            "Close": "close",
-        })
-        ohlc_df['date'] = pd.to_datetime(ohlc_df['date']).apply(lambda x: x.to_pydatetime())
-        ohlc_df['instrument_id'] = instrument.id
+        ohlc_df = ohlc_df.rename(
+            columns={
+                "Date": "date",
+                "Open": "open",
+                "High": "high",
+                "Low": "low",
+                "Close": "close",
+            }
+        )
+        ohlc_df["date"] = pd.to_datetime(ohlc_df["date"]).apply(
+            lambda x: x.to_pydatetime()
+        )
+        ohlc_df["instrument_id"] = instrument.id
 
         daily_data_rel = instrument.daily_data
         daily_data_rel.bulk_create(
-            daily_data_rel.model(**vals) for vals in ohlc_df.to_dict('records')
+            daily_data_rel.model(**vals) for vals in ohlc_df.to_dict("records")
         )
 
     def load_bulk_instruments(self, instruments_from_exchange: list) -> list:
@@ -247,10 +261,10 @@ class InstrumentManager(models.Manager):
         created_instruments = 0
 
         for instrument_info in instruments_from_exchange:
-            instrument_info['symbol'] = instrument_info['tradingsymbol']
-            instrument_info['trading_symbol'] = instrument_info['tradingsymbol']
-            del instrument_info['tradingsymbol']
-            del instrument_info['last_price']
+            instrument_info["symbol"] = instrument_info["tradingsymbol"]
+            instrument_info["trading_symbol"] = instrument_info["tradingsymbol"]
+            del instrument_info["tradingsymbol"]
+            del instrument_info["last_price"]
 
             try:
                 self.create(**instrument_info)

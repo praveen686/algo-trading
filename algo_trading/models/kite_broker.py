@@ -1,6 +1,8 @@
-import environ
 import logging
+
+import environ
 from kiteconnect import KiteConnect
+
 from .instruments import Instrument
 
 env = environ.Env()
@@ -12,7 +14,9 @@ class Singleton(type):
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(*args, api_key=env('ZERODHA_API_KEY'), **kwargs)
+            cls._instances[cls] = super(Singleton, cls).__call__(
+                *args, api_key=env("ZERODHA_API_KEY"), **kwargs
+            )
         return cls._instances[cls]
 
 
@@ -31,7 +35,9 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
         self.refresh_token = rt
 
     def create_session(self, zerodha_request_token):
-        return self.generate_session(zerodha_request_token, api_secret=env('ZERODHA_API_SECRET'))
+        return self.generate_session(
+            zerodha_request_token, api_secret=env("ZERODHA_API_SECRET")
+        )
 
     def load_instruments_for_today(self):
         logger.info("Starting instruments load")
@@ -41,11 +47,20 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
             logger.info(f"Starting instruments load for exchange: {exchange}")
 
             instruments_in_exchange = self.instruments(exchange)
-            logger.info(f"Found {len(instruments_in_exchange)} instruments in exchange {exchange}")
+            logger.info(
+                f"Found {len(instruments_in_exchange)} instruments in exchange {exchange}"
+            )
 
-            newly_created = Instrument.objects.load_bulk_instruments(instruments_in_exchange)
-            logger.info(f"Created new {newly_created} instruments for exchange {exchange}")
+            newly_created = Instrument.objects.load_bulk_instruments(
+                instruments_in_exchange
+            )
+            logger.info(
+                f"Created new {newly_created} instruments for exchange {exchange}"
+            )
 
             instruments_loaded.append({exchange: newly_created})
 
         return instruments_loaded
+
+    def parse_call_from_blob(self, call_blob):
+        return [1, 2, 3, 4, 5]

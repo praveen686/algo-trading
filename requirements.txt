@@ -25,6 +25,7 @@ django-bootstrap5==23.1
 django-environ==0.10.0
 django-extensions==3.2.1
 django-middleware-extras==0.1.2
+djhtml==3.0.6
 docker==4.4.4
 docker-compose==1.25.5
 dockerpty==0.4.1

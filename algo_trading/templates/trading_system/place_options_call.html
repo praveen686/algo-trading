@@ -1,37 +1,36 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card shadow-lg mb-5 mt-xl-10 mb-xl-10">
-  <div class="card-header">
-    <h4 class="card-title">Place a New Options Call</h4>
+  <div class="card shadow-lg mb-5 mt-xl-10 mb-xl-10">
+    <div class="card-header">
+      <h4 class="card-title">Place a New Options Call</h4>
+    </div>
+
+    <div class="card-body p-10">
+      <form class="form" action={% url 'place-options-call' %} method="POST">
+        {% csrf_token %}
+
+        <div class="mb-7">
+          <label
+            for="{{ form.call_blob.id_for_label }}"
+            class="required form-label fs-1"
+          >
+            Enter Options Call
+          </label>
+
+          <textarea
+            class="form-control form-control-solid lh-xxl min-h-200px"
+            id="{{ form.call_blob.id_for_label }}"
+            name="{{ form.call_blob.html_name }}"
+            required
+          >{{ form.call_blob.value|default_if_none:'' }}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-xl btn-light-success btn-active-icon-danger hover-scale">
+          <i class="ki-duotone ki-brifecase-tick fs-1"><i class="path1"></i><i class="path2"></i><i class="path3"></i></i>
+          Validate &amp; Place Order
+        </button>
+      </form>
+    </div>
   </div>
-
-  <div class="card-body p-10">
-    <form class="form" action={% url 'place-options-call' %} method="POST">
-      {% csrf_token %}
-
-      <div class="mb-7">
-        <label
-          for="{{ form.call_blob.id_for_label }}"
-          class="required form-label fs-1"
-        >
-          Enter Options Call
-        </label>
-
-        <textarea
-          class="form-control form-control-solid lh-xxl min-h-200px"
-          id="{{ form.call_blob.id_for_label }}"
-          name="{{ form.call_blob.html_name }}"
-          required
-        >{{ form.call_blob.value|default_if_none:'' }}</textarea>
-      </div>
-
-      <button type="submit" class="btn btn-xl btn-light-success btn-active-icon-danger hover-scale">
-        <i class="ki-duotone ki-brifecase-tick fs-1"><i class="path1"></i><i class="path2"></i><i class="path3"></i></i>
-        Validate &amp; Place Order
-      </button>
-    </form>
-  </div>
-</div>
-
 {% endblock %}

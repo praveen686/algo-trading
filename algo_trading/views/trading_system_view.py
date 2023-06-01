@@ -2,25 +2,19 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
 from ..forms.zerodha.options_call_form import OptionsCallForm
-from ..models.kite_broker import KiteBroker
+from ..models.trading_system import TradingSystem
 
 
 @require_http_methods(["GET", "POST"])
 def place_options_call(request):
-    kite = KiteBroker()
+    ts = TradingSystem()
+
     print(f"form data={request.POST}")
     if request.method == "POST":
         options_call_form = OptionsCallForm(request.POST)
 
         if options_call_form.is_valid():
-            (
-                option_name,
-                entry_price,
-                stoploss_price,
-                target1_price,
-                target2_price,
-            ) = kite.parse_call_from_blob(options_call_form.cleaned_data["call_blob"])
-
+            ts.place_order_from_call_blob(options_call_form.cleaned_data["call_blob"])
     else:
         options_call_form = OptionsCallForm()
 

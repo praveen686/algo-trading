@@ -61,6 +61,3 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
             instruments_loaded.append({exchange: newly_created})
 
         return instruments_loaded
-
-    def parse_call_from_blob(self, call_blob):
-        return [1, 2, 3, 4, 5]

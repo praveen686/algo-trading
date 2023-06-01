@@ -79,6 +79,12 @@ def add_instruments(request):
 
 @require_http_methods(["GET"])
 def list_instruments(request):
+    """Show all instruments
+
+    Shows all the instruments in the system. Currently only shows the last 100
+    until pagination is being built into the frontend display system
+    """
+
     instruments = Instrument.objects.filter()[:100]
 
     return render(

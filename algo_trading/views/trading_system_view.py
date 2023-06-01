@@ -7,6 +7,21 @@ from ..models.business_domain.trading_system import TradingSystem
 
 @require_http_methods(["GET", "POST"])
 def place_options_call(request):
+    """Creates an option call via a TradingSignal object
+
+    The POST request has the details of the call as received.
+    Parses that to create a signal and places an order.
+    Alerts the user if the same call was placed more than once
+    Raises an error if the instrument is not found in the DB.
+
+    Raises
+    ------
+    Error404 if the requested instrument does not exist in the list of instruments
+    to trade from the daily zerodha import.
+    """
+
+    # @TODO
+    # check if duplicate call is placed with the same params accidentally.
     ts = TradingSystem()
     trading_signal = None
 
@@ -28,6 +43,3 @@ def place_options_call(request):
             "signal": trading_signal,
         },
     )
-
-
-# 'call_blob': ['TATACHEM JUN 970 CE\r\nEntry -  18\r\nTargets -  22, 40+\r\nStoploss -  9']

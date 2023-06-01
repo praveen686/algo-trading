@@ -7,10 +7,40 @@ from ..instruments import Instrument
 
 
 class TradingSignalManager(models.Manager):
-    def create_from_call_blob(self, call_blob):
-        print(f"call_blob= {call_blob}, type={type(call_blob)}")
+    """Manager class for `TradingSignal`
+
+    Class level functionalities for trading signal go here
+    """
+
+    def create_from_call_blob(self, call_blob: str):
+        """Creates a TradingSignal from an options call
+
+        Parses the call from the below format and creates attributes for the object.
+        Fetches the instrument name as received from the available set of instruments
+        Raises 404 error if the instrument is not tradeable.
+
+        Parameters
+        ----------
+        call_blob: str
+            The call for options as received
+            Sample:
+            MANAPPURAM JUN 110 CE
+            Entry -  5.20
+            Targets -  5.70, 10+
+            Stoploss -  2.50
+            The format remains the same for options call
+
+        Returns
+        -------
+        TradingSignal object created out of the received call for the instrument
+        along with other details from the instrument
+
+        Raises
+        ------
+        Error404 if the instrument does not exist in the DB for trading.
+        """
+
         lines = call_blob.split("\r\n")
-        print(f"lines = {lines}")
 
         instrument_name = lines[0].strip()
         entry_line = lines[1].strip()

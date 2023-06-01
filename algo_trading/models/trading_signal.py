@@ -2,12 +2,23 @@ from django.db import models
 from django.urls import reverse
 
 from .instruments import Instrument
+from .managers.trading_signal_manager import TradingSignalManager
 
 
 class TradingSignal(models.Model):
     created_at = models.DateTimeField("created at")
-    fulfilled_at = models.DateTimeField("fulfilled at")
-    exited_at = models.DateTimeField("exited at")
+    fulfilled_at = models.DateTimeField(
+        "fulfilled at",
+        default=None,
+        null=True,
+        blank=True,
+    )
+    exited_at = models.DateTimeField(
+        "exited at",
+        default=None,
+        null=True,
+        blank=True,
+    )
     signal_source = models.CharField("source of signal", max_length=100, default="")
 
     instrument_type = models.CharField(
@@ -106,3 +117,5 @@ class TradingSignal(models.Model):
 
     def get_absolute_url(self):
         return reverse("trading-signal", args=[self.id])
+
+    objects = TradingSignalManager()

@@ -8,13 +8,15 @@ from ..models.business_domain.trading_system import TradingSystem
 @require_http_methods(["GET", "POST"])
 def place_options_call(request):
     ts = TradingSystem()
+    trading_signal = None
 
-    print(f"form data={request.POST}")
     if request.method == "POST":
         options_call_form = OptionsCallForm(request.POST)
 
         if options_call_form.is_valid():
-            ts.place_order_from_call_blob(options_call_form.cleaned_data["call_blob"])
+            trading_signal = ts.place_order_from_call_blob(
+                options_call_form.cleaned_data["call_blob"]
+            )
     else:
         options_call_form = OptionsCallForm()
 
@@ -23,6 +25,7 @@ def place_options_call(request):
         "trading_system/place_options_call.html",
         {
             "form": options_call_form,
+            "signal": trading_signal,
         },
     )
 

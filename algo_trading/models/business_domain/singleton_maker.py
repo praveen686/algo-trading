@@ -2,7 +2,6 @@ class Singleton(type):
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
-        print(f"kwargs={kwargs}, args={args}, cls={cls}")
         if cls not in cls._instances:
             get_extra_kwargs = getattr(cls, "_get_required_kwargs", None)
 

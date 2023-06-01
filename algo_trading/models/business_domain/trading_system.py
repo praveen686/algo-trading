@@ -12,10 +12,9 @@ class TradingSystem(metaclass=Singleton):
     funds_manager: object = None
 
     def place_order_from_call_blob(self, call_blob):
-        signal_attrs = self.gather_signal_details_from_options_call(call_blob)
-        signal_object = self.create_signal(signal_attrs)
-        order_object = self.process_signal(signal_object)
-        return order_object
+        signal_object = TradingSignal.objects.create_from_call_blob(call_blob)
+        # order_object = self.process_signal(signal_object)
+        return signal_object
 
     def gather_signal_details_from_options_call(self, call_blob: dict):
         return "ok"

@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="row g-5 g-xl-8 mt-10">
+    <div class="card shadow-lg card-xl-stretch mb-xl-8 p-0">
+      <div class="card-header bg-info border-0 py-5">
+        <h3 class="card-title fw-bold text-white">Trading Signal</h3>
+      </div>
+      <!-- End card header -->
+
+      <div class="card-body p-0">
+        <!-- apex chart for LTP movement -->
+        <div class="mixed-widget-chart card-rounded-bottom bg-info mh-200px mw-200px">
+        </div>
+
+        <!-- signal details -->
+        <div class="card-p mt-1 position-relative">
+          <!-- Call details -->
+          <div class="row g-0">
+            <h3 class="text-gray-700 ls-2 mb-5 text-center fs-2x">Call Predictions</h3>
+
+            <div class="col d-flex flex-column bg-light-info px-6 py-8 rounded-2 me-7 mb-7">
+              <div class="fs-6 text-info">Name</div>
+              <div class="fs-2 fw-bold text-info">{{ trading_signal.instrument.trading_symbol }}</div>
+            </div>
+
+            <div class="col d-flex flex-column bg-light-info px-6 py-8 rounded-2 me-7 mb-7">
+              <div class="fs-6 text-info">Entry Price</div>
+              <div class="fs-2 fw-bold text-info">{{ trading_signal.entry_point }}</div>
+            </div>
+
+            <div class="col d-flex flex-column bg-light-info px-6 py-8 rounded-2 me-7 mb-7">
+              <div class="fs-6 text-info">StopLoss</div>
+              <div class="fs-2 fw-bold text-info">{{ trading_signal.stoploss_point }}</div>
+            </div>
+
+            <div class="col d-flex flex-column bg-light-info px-6 py-8 rounded-2 me-7 mb-7">
+              <div class="fs-6 text-info">Target1</div>
+              <div class="fs-2 fw-bold text-info">{{ trading_signal.target1 }}</div>
+            </div>
+
+            <div class="col d-flex flex-column bg-light-info px-6 py-8 rounded-2 me-7 mb-7">
+              <div class="fs-6 text-info">Target2</div>
+              <div class="fs-2 fw-bold text-info">{{ trading_signal.target2 }}</div>
+            </div>
+
+            <div class="col d-flex flex-column bg-light-info px-6 py-8 rounded-2 mb-7">
+              <div class="fs-6 text-info">Lot Size</div>
+              <div class="fs-2 fw-bold text-info">{{ trading_signal.lot_size }}</div>
+            </div>
+          </div>
+
+          <!-- Actuals -->
+          <div class="row g-0 mt-10">
+            <h3 class="text-gray-700 ls-2 mb-5 text-center fs-2x">Actual Values</h3>
+          </div>
+        </div>
+        <!-- End card body -->
+
+        <div class="card-footer">
+          <p class="card-text">Praveen Calls</p>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

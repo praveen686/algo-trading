@@ -43,7 +43,7 @@ class TradingSignal(models.Model):
         null=True,
         blank=True,
         max_digits=15,
-        decimal_places=5,
+        decimal_places=2,
     )
     stoploss_point = models.DecimalField(
         "stoploss point",
@@ -51,7 +51,7 @@ class TradingSignal(models.Model):
         null=True,
         blank=True,
         max_digits=15,
-        decimal_places=5,
+        decimal_places=2,
     )
     target1 = models.DecimalField(
         "target 1",
@@ -59,7 +59,7 @@ class TradingSignal(models.Model):
         null=True,
         blank=True,
         max_digits=15,
-        decimal_places=5,
+        decimal_places=2,
     )
     target2 = models.DecimalField(
         "target 2",
@@ -67,7 +67,7 @@ class TradingSignal(models.Model):
         null=True,
         blank=True,
         max_digits=15,
-        decimal_places=5,
+        decimal_places=2,
     )
     # Ununsed for now, but kept for future uses
     target3 = models.DecimalField(
@@ -76,7 +76,7 @@ class TradingSignal(models.Model):
         null=True,
         blank=True,
         max_digits=15,
-        decimal_places=5,
+        decimal_places=2,
     )
     lot_size = models.IntegerField(
         "lot size",

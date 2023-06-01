@@ -42,6 +42,43 @@ class InstrumentManager(models.Manager):
         except self.model.DoesNotExist:
             raise Http404("No Instrument matches the given symbol.")
 
+    def get_options_from_symbol(self, name: str):
+        """Get instrument from an option's name
+
+        Specific parsing of options name and conversion from the visible string
+        to the internal zerodha format. Zerodha stores the expiry day in the
+        trading symbol name, but the call is received with the user friendly
+        space separated name without the expiry date. A minor conversion from
+        one to the other is done here.
+
+        Parameters
+        ----------
+        name: str
+            The option name, like "ASHOKLEY JUN 145 CE"
+
+        Returns
+        -------
+        Instrument that has trading symbol "ASHOKLEY23JUN145CE"
+
+        Raises
+        ------
+        Http404 if the instrument is not found.
+
+        """
+        phrases = name.split(" ")
+        instrument_name = phrases[0]
+        instrument_expiry_and_option = "".join(phrases[1:])
+
+        try:
+            return (
+                super()
+                .get_queryset()
+                .filter(trading_symbol__startswith=instrument_name)
+                .get(trading_symbol__endswith=instrument_expiry_and_option)
+            )
+        except self.model.DoesNotExist:
+            raise Http404(f"No Option: {name} matches the given symbol.")
+
     def import_symbols_from_yf(self, symbol_list: list) -> pd.DataFrame:
         """Import multiple symbols from yFinance.
 
@@ -243,20 +280,23 @@ class InstrumentManager(models.Manager):
         """Loads instruments available from the exchange into our DB.
 
         Given an array of instruments, they're loaded into our DB if they're not present already.
-        Existing instruments are skipped over.
+        Existing instruments are skipped over. This is applicable for Zerodha's API
+        endpoint +/instruments+
 
         Parameters
         ----------
         instruments_from_exchange: Array<dict>
-            Array of objects containing info about the instruments available to trade on that exchange
+            Array of objects containing count of the instruments that are imported
 
         Creates
         -------
-
+        All instrument objects with the data coming from the payload. Only new objects
+        are created. Already existing objects (identified by duplicate pairs of
+        trading_symbol and exchange) are skipped over and not imported.
 
         Returns
         -------
-        List of all instruments either created or found
+        Count of all instruments either created or found
         """
         created_instruments = 0
 

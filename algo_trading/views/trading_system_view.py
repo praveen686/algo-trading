@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_http_methods
 
 from ..forms.zerodha.options_call_form import OptionsCallForm
 from ..models.business_domain.trading_system import TradingSystem
+from ..models.trading_signal import TradingSignal
 
 
 @require_http_methods(["GET", "POST"])
@@ -32,6 +33,7 @@ def place_options_call(request):
             trading_signal = ts.place_order_from_call_blob(
                 options_call_form.cleaned_data["call_blob"]
             )
+            return redirect(trading_signal)
     else:
         options_call_form = OptionsCallForm()
 
@@ -42,4 +44,15 @@ def place_options_call(request):
             "form": options_call_form,
             "signal": trading_signal,
         },
+    )
+
+
+@require_http_methods(["GET"])
+def trading_signal(request, pk: int):
+    trading_signal = get_object_or_404(TradingSignal, pk=pk)
+
+    return render(
+        request,
+        "trading_system/trading_signal.html",
+        {"trading_signal": trading_signal},
     )

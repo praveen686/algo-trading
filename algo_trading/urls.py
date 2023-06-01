@@ -19,7 +19,6 @@ from django.urls import include, path
 from . import views
 
 urlpatterns = [
-    path("polls/", include("polls.urls")),
     path("admin/doc/", include("django.contrib.admindocs.urls")),
     path("admin/", admin.site.urls),
     # Instrument
@@ -41,5 +40,5 @@ urlpatterns = [
         views.place_options_call,
         name="place-options-call",
     ),
-    # path("trading_system/calls/<int:pk>", views.trading_signal, name="trading-signal"),
+    path("trading_system/calls/<int:pk>", views.trading_signal, name="trading-signal"),
 ]

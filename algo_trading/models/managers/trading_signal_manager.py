@@ -28,7 +28,7 @@ class TradingSignalManager(models.Manager):
             Entry -  5.20
             Targets -  5.70, 10+
             Stoploss -  2.50
-            The format remains the same for options call
+            The format always remains the same for options call
 
         Returns
         -------
@@ -37,7 +37,7 @@ class TradingSignalManager(models.Manager):
 
         Raises
         ------
-        Error404 if the instrument does not exist in the DB for trading.
+        Http404 if the instrument does not exist in the DB for trading.
         """
 
         lines = call_blob.split("\r\n")
@@ -55,7 +55,7 @@ class TradingSignalManager(models.Manager):
 
         option_type = instrument_name[-2:]
 
-        instrument = Instrument.objects.get_by_symbol(instrument_name)
+        instrument = Instrument.objects.get_options_from_symbol(instrument_name)
 
         signal = self.create(
             signal_type=self.model.TradingSignalType.BUY,

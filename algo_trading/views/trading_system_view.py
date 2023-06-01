@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
 
 from ..forms.zerodha.options_call_form import OptionsCallForm
-from ..models.trading_system import TradingSystem
+from ..models.business_domain.trading_system import TradingSystem
 
 
 @require_http_methods(["GET", "POST"])

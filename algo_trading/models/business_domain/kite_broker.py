@@ -3,24 +3,24 @@ import logging
 import environ
 from kiteconnect import KiteConnect
 
-from .instruments import Instrument
+from ..instruments import Instrument
 
 env = environ.Env()
 logger = logging.getLogger(__name__)
 
 
-class Singleton(type):
+class SingletonWithMoreArgs(type):
     _instances = {}
 
     def __call__(cls, *args, **kwargs):
         if cls not in cls._instances:
-            cls._instances[cls] = super(Singleton, cls).__call__(
+            cls._instances[cls] = super(SingletonWithMoreArgs, cls).__call__(
                 *args, api_key=env("ZERODHA_API_KEY"), **kwargs
             )
         return cls._instances[cls]
 
 
-class KiteBroker(KiteConnect, metaclass=Singleton):
+class KiteBroker(KiteConnect, metaclass=SingletonWithMoreArgs):
     api_key: str = None
     api_secret: str = None
 

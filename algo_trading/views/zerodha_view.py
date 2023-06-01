@@ -4,7 +4,7 @@ from django.utils.http import urlencode
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.views.decorators.http import require_http_methods
 
-from ..models.kite_broker import KiteBroker
+from ..models.business_domain.kite_broker import KiteBroker
 
 
 @require_http_methods(["GET"])

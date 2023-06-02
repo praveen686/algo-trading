@@ -41,4 +41,5 @@ urlpatterns = [
         name="place-options-call",
     ),
     path("trading_system/calls/<int:pk>", views.trading_signal, name="trading-signal"),
+    path("trading_system/calls/options", views.options_calls, name="options-calls"),
 ]

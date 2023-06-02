@@ -113,9 +113,21 @@ class TradingSignal(models.Model):
         get_latest_by = "id"
 
     def __str__(self):
-        return f"{self.signal_type}: {self.instrument__name} at {self.entry_point}, SL: {self.stoploss_point}, targets: {self.target1}, {self.target2}"
+        return (
+            f"{self.signal_type}: {self.instrument.trading_symbol} "
+            f"at {self.entry_point}, SL: {self.stoploss_point}, "
+            f"targets: {self.target1}, {self.target2}"
+        )
 
     def get_absolute_url(self):
         return reverse("trading-signal", args=[self.id])
 
     objects = TradingSignalManager()
+
+    @property
+    def margin_per_lot(self):
+        return self.lot_size * self.entry_point
+
+    @property
+    def signal_time_for_display(self) -> str:
+        return self.created_at.strftime("%B %d, %Y")

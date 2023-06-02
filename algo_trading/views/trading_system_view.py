@@ -23,6 +23,7 @@ def place_options_call(request):
 
     # @TODO
     # check if duplicate call is placed with the same params accidentally.
+
     ts = TradingSystem()
     trading_signal = None
 
@@ -49,10 +50,25 @@ def place_options_call(request):
 
 @require_http_methods(["GET"])
 def trading_signal(request, pk: int):
+    """Show a trading signal"""
+
     trading_signal = get_object_or_404(TradingSignal, pk=pk)
 
     return render(
         request,
         "trading_system/trading_signal.html",
         {"trading_signal": trading_signal},
+    )
+
+
+@require_http_methods(["GET"])
+def options_calls(request):
+    """Show all options calls"""
+
+    options_calls = TradingSignal.objects.get_options_calls()
+
+    return render(
+        request,
+        "trading_system/options_calls.html",
+        {"options_calls": options_calls},
     )

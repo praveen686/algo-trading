@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+  <div class="row g-5 g-xl-8 mt-10">
+    <div class="card shadow-lg card-xl-stretch p-0">
+      <div class="card-header bg-success bg-opacity-75 min-h-100px">
+        <h3 class="card-title fw-bold text-white fs-2x">All Options Calls</h3>
+      </div>
+      <!-- End card header -->
+
+      <div class="card-body">
+        <div class="row g-0">
+          <table class="options-calls-list table gy-5 gs-5 align-middle">
+            <thead>
+              <tr class="fw-bold text-muted bg-light">
+                <th class="ps-4 rounded-start min-w-25px">#</th>
+                <th>Name</th>
+                <th>Underlying Instrument</th>
+                <th>Entry Price</th>
+                <th>Stoploss</th>
+                <th>Target1</th>
+                <th>Target2</th>
+                <th>Lot Size</th>
+                <th>Margin per Lot</th>
+                <th class="text-end rounded-end">Created at</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {% for options_call in options_calls %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>
+                    <a href="{% url 'trading-signal' options_call.id %}">{{ options_call.instrument.trading_symbol }}</a>
+                  </td>
+                  <td>{{ options_call.instrument.name }}</td>
+                  <td>{{ options_call.entry_point }}</td>
+                  <td>{{ options_call.stoploss_point }}</td>
+                  <td>{{ options_call.target1 }}</td>
+                  <td>{{ options_call.target2 }}</td>
+                  <td>{{ options_call.lot_size }}</td>
+                  <td>{{ options_call.margin_per_lot }}</td>
+                  <td class="text-end">{{ options_call.signal_time_for_display }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- End card body -->
+    </div>
+  </div>
+
+{% endblock %}
+
+{% block scripts %}
+  <link href="{% static 'plugins/custom/datatables/datatables.bundle.css' %}" rel="stylesheet" type="text/css" />
+  <script src="{% static 'plugins/custom/datatables/datatables.bundle.js' %}"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+      $('.options-calls-list').DataTable({
+        "pageLength": 25,
+      });
+    });
+  </script>
+{% endblock %}

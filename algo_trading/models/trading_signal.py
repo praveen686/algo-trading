@@ -131,3 +131,10 @@ class TradingSignal(models.Model):
     @property
     def signal_time_for_display(self) -> str:
         return self.created_at.strftime("%B %d, %Y")
+
+    def options_signal(self):
+        return (
+            self.instrument_type
+            == Instrument.InstrumentType.CALL_OPTION | self.instrument_type
+            == Instrument.InstrumentType.PUT_OPTION
+        )

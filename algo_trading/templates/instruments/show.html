@@ -23,14 +23,14 @@
     {% if daily_data.count > 0 %}
       <div class="table-responsive">
         <p class="ohlc-data-count">Total <strong>{{ daily_data.count }}</strong> OHLC values</p>
-        <table class="ohlc-data table rounded table-striped border gy-7 gs-7">
+        <table class="ohlc-data table gy-5 gs-5 align-middle">
           <thead>
-            <tr>
-              <th>Date</th>
+            <tr class="fw-bold text-muted bg-light">
+              <th class="ps-4 rounded-start min-w-25px">Date</th>
               <th>Open</th>
               <th>High</th>
               <th>Low</th>
-              <th>Close</th>
+              <th class="rounded-end">Close</th>
             </tr>
           </thead>
 

@@ -1,9 +1,9 @@
 # Create your views here.
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_http_methods
-from ..models.instruments import Instrument
 
 from ..forms.instruments.add_instrument_form import AddInstrumentForm
+from ..models.instruments import Instrument
 
 
 @require_http_methods(["GET"])
@@ -11,10 +11,7 @@ def instrument_by_pk(request, pk: int):
     """Show an `Instrument` instance identified by its primary key: `pk`"""
 
     instrument = get_object_or_404(Instrument, pk=pk)
-    return display_instrument(
-        request,
-        instrument
-    )
+    return display_instrument(request, instrument)
 
 
 @require_http_methods(["GET"])
@@ -22,10 +19,7 @@ def instrument_by_symbol(request, symbol: str):
     """Show an `Instrument` instance identified by its `symbol`"""
 
     instrument = Instrument.objects.get_by_symbol(symbol)
-    return display_instrument(
-        request,
-        instrument
-    )
+    return display_instrument(request, instrument)
 
 
 def display_instrument(request, instrument: Instrument):
@@ -33,10 +27,10 @@ def display_instrument(request, instrument: Instrument):
 
     return render(
         request,
-        'instruments/show.html',
+        "instruments/show.html",
         {
-            'instrument': instrument,
-            'daily_data': instrument.daily_data.order_by("-date"),
+            "instrument": instrument,
+            "daily_data": instrument.daily_data.order_by("-date"),
         },
     )
 
@@ -66,11 +60,11 @@ def add_instruments(request):
     """
 
     symbols_import_summary = {}
-    if request.method == 'POST':
+    if request.method == "POST":
         form = AddInstrumentForm(request.POST)
 
         if form.is_valid():
-            symbols = [s.strip() for s in form.cleaned_data['symbol'].split(",")]
+            symbols = [s.strip() for s in form.cleaned_data["symbol"].split(",")]
             symbols_import_summary = Instrument.objects.import_symbols_from_yf(symbols)
 
     else:
@@ -78,22 +72,25 @@ def add_instruments(request):
 
     return render(
         request,
-        'instruments/add_instrument.html',
-        {
-            'form': form,
-            'symbols_import_summary': symbols_import_summary
-        }
+        "instruments/add_instrument.html",
+        {"form": form, "symbols_import_summary": symbols_import_summary},
     )
 
 
 @require_http_methods(["GET"])
 def list_instruments(request):
+    """Show all instruments
+
+    Shows all the instruments in the system. Currently only shows the last 100
+    until pagination is being built into the frontend display system
+    """
+
     instruments = Instrument.objects.filter()[:100]
 
     return render(
         request,
-        'instruments/list_instruments.html',
+        "instruments/list_instruments.html",
         {
-            'instruments': instruments,
-        }
+            "instruments": instruments,
+        },
     )

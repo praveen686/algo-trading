@@ -1,18 +1,20 @@
 import datetime
 
-from django.http import Http404
-from django.db import models, IntegrityError
-import yfinance as yf
 import pandas as pd
+import yfinance as yf
+from django.db import IntegrityError, models
+from django.http import Http404
 
-from ...exceptions.instruments.invalid_ticker_symbol_error import InvalidTickerSymbolError
+from ...exceptions.instruments.invalid_ticker_symbol_error import (
+    InvalidTickerSymbolError,
+)
 
 
 class InstrumentManager(models.Manager):
-    KEY_FOR_SYMBOL_IN_INFO = 'symbol'
-    KEY_FOR_DESCRIPTIVE_NAME_IN_INFO = 'longName'
-    KEY_FOR_FIRST_OPEN_DATE_IN_INFO = 'firstTradeDateMilliseconds'
-    KEY_FOR_INSTRUMENT_TYPE_IN_INFO = 'typeDisp'
+    KEY_FOR_SYMBOL_IN_INFO = "symbol"
+    KEY_FOR_DESCRIPTIVE_NAME_IN_INFO = "longName"
+    KEY_FOR_FIRST_OPEN_DATE_IN_INFO = "firstTradeDateMilliseconds"
+    KEY_FOR_INSTRUMENT_TYPE_IN_INFO = "typeDisp"
 
     def get_by_symbol(self, symbol: str):
         """Get an instrument by its symbol, irrespective of case
@@ -39,6 +41,43 @@ class InstrumentManager(models.Manager):
             return super().get_queryset().get(trading_symbol__iexact=symbol)
         except self.model.DoesNotExist:
             raise Http404("No Instrument matches the given symbol.")
+
+    def get_options_from_symbol(self, name: str):
+        """Get instrument from an option's name
+
+        Specific parsing of options name and conversion from the visible string
+        to the internal zerodha format. Zerodha stores the expiry day in the
+        trading symbol name, but the call is received with the user friendly
+        space separated name without the expiry date. A minor conversion from
+        one to the other is done here.
+
+        Parameters
+        ----------
+        name: str
+            The option name, like "ASHOKLEY JUN 145 CE"
+
+        Returns
+        -------
+        Instrument that has trading symbol "ASHOKLEY23JUN145CE"
+
+        Raises
+        ------
+        Http404 if the instrument is not found.
+
+        """
+        phrases = name.split(" ")
+        instrument_name = phrases[0]
+        instrument_expiry_and_option = "".join(phrases[1:])
+
+        try:
+            return (
+                super()
+                .get_queryset()
+                .filter(trading_symbol__startswith=instrument_name)
+                .get(trading_symbol__endswith=instrument_expiry_and_option)
+            )
+        except self.model.DoesNotExist:
+            raise Http404(f"No Option: {name} matches the given symbol.")
 
     def import_symbols_from_yf(self, symbol_list: list) -> pd.DataFrame:
         """Import multiple symbols from yFinance.
@@ -69,18 +108,20 @@ class InstrumentManager(models.Manager):
             try:
                 created_symbols.append(self.import_symbol_from_yf(symbol))
             except InvalidTickerSymbolError:
-                failed_symbols.append({'symbol': symbol, 'reason': "Symbol is invalid"})
+                failed_symbols.append({"symbol": symbol, "reason": "Symbol is invalid"})
             except IntegrityError:
-                failed_symbols.append({'symbol': symbol, 'reason': "Instrument already exists"})
+                failed_symbols.append(
+                    {"symbol": symbol, "reason": "Instrument already exists"}
+                )
             except Exception as exc:
-                failed_symbols.append({'symbol': symbol, 'reason': exc.args})
+                failed_symbols.append({"symbol": symbol, "reason": exc.args})
 
             # Any possible error for each symbol is handled and an appropriate msg is generated.
             # Whether any one symbol passes or fails, the import continues on for the rest of the symbols.
             continue
 
-        import_summary['failed'] = failed_symbols
-        import_summary['created'] = created_symbols
+        import_summary["failed"] = failed_symbols
+        import_summary["created"] = created_symbols
 
         return import_summary
 
@@ -147,13 +188,19 @@ class InstrumentManager(models.Manager):
             # Normalize API response to model specific formats
             # Convert date from epoch time in ms to python date format
             # Convert type from the string +Equity+ to its matching label in choices +EQ+
-            first_open_date_from_info = instrument_info[self.KEY_FOR_FIRST_OPEN_DATE_IN_INFO] / 1000
+            first_open_date_from_info = (
+                instrument_info[self.KEY_FOR_FIRST_OPEN_DATE_IN_INFO] / 1000
+            )
             first_open_date = datetime.datetime.fromtimestamp(first_open_date_from_info)
 
-            instrument_type_from_info = instrument_info[self.KEY_FOR_INSTRUMENT_TYPE_IN_INFO]
+            instrument_type_from_info = instrument_info[
+                self.KEY_FOR_INSTRUMENT_TYPE_IN_INFO
+            ]
 
             # Convert value from api as 'Equity' to its key 'EQ' from Instrument
-            instrument_type = {i.label: i.value for i in self.model.InstrumentType}[instrument_type_from_info] # noqa
+            instrument_type = {i.label: i.value for i in self.model.InstrumentType}[
+                instrument_type_from_info
+            ]  # noqa
 
             return self.create(
                 symbol=instrument_info[self.KEY_FOR_SYMBOL_IN_INFO],
@@ -164,7 +211,7 @@ class InstrumentManager(models.Manager):
         except AttributeError as error:
             # If the symbol was invalid, ticker.info raises an AttributeError with
             # NoneType in the error message
-            if 'NoneType' in error.args[0]:
+            if "NoneType" in error.args[0]:
                 raise InvalidTickerSymbolError
             else:
                 # If there were any other AttributeError's, we pass them on to the caller of this method
@@ -208,49 +255,56 @@ class InstrumentManager(models.Manager):
         # This DF may have rows with empty values in some columns, dropping rows with any NaN's.
         # This DF has the date as the index, which we need to capture as a column for each entry
         # So we need to reset the index on the DF.
-        ohlc_df = ohlc_df.reset_index().dropna(how='any')
+        ohlc_df = ohlc_df.reset_index().dropna(how="any")
         ohlc_df = ohlc_df.drop(["Volume", "Dividends", "Stock Splits"], axis=1)
-        ohlc_df = ohlc_df.rename(columns={
-            "Date": "date",
-            "Open": "open",
-            "High": "high",
-            "Low": "low",
-            "Close": "close",
-        })
-        ohlc_df['date'] = pd.to_datetime(ohlc_df['date']).apply(lambda x: x.to_pydatetime())
-        ohlc_df['instrument_id'] = instrument.id
+        ohlc_df = ohlc_df.rename(
+            columns={
+                "Date": "date",
+                "Open": "open",
+                "High": "high",
+                "Low": "low",
+                "Close": "close",
+            }
+        )
+        ohlc_df["date"] = pd.to_datetime(ohlc_df["date"]).apply(
+            lambda x: x.to_pydatetime()
+        )
+        ohlc_df["instrument_id"] = instrument.id
 
         daily_data_rel = instrument.daily_data
         daily_data_rel.bulk_create(
-            daily_data_rel.model(**vals) for vals in ohlc_df.to_dict('records')
+            daily_data_rel.model(**vals) for vals in ohlc_df.to_dict("records")
         )
 
     def load_bulk_instruments(self, instruments_from_exchange: list) -> list:
         """Loads instruments available from the exchange into our DB.
 
         Given an array of instruments, they're loaded into our DB if they're not present already.
-        Existing instruments are skipped over.
+        Existing instruments are skipped over. This is applicable for Zerodha's API
+        endpoint +/instruments+
 
         Parameters
         ----------
         instruments_from_exchange: Array<dict>
-            Array of objects containing info about the instruments available to trade on that exchange
+            Array of objects containing count of the instruments that are imported
 
         Creates
         -------
-
+        All instrument objects with the data coming from the payload. Only new objects
+        are created. Already existing objects (identified by duplicate pairs of
+        trading_symbol and exchange) are skipped over and not imported.
 
         Returns
         -------
-        List of all instruments either created or found
+        Count of all instruments either created or found
         """
         created_instruments = 0
 
         for instrument_info in instruments_from_exchange:
-            instrument_info['symbol'] = instrument_info['tradingsymbol']
-            instrument_info['trading_symbol'] = instrument_info['tradingsymbol']
-            del instrument_info['tradingsymbol']
-            del instrument_info['last_price']
+            instrument_info["symbol"] = instrument_info["tradingsymbol"]
+            instrument_info["trading_symbol"] = instrument_info["tradingsymbol"]
+            del instrument_info["tradingsymbol"]
+            del instrument_info["last_price"]
 
             try:
                 self.create(**instrument_info)

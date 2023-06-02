@@ -15,21 +15,31 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+
 from . import views
 
 urlpatterns = [
-    path('polls/', include('polls.urls')),
-    path('admin/doc/', include('django.contrib.admindocs.urls')),
-    path('admin/', admin.site.urls),
-
+    path("admin/doc/", include("django.contrib.admindocs.urls")),
+    path("admin/", admin.site.urls),
     # Instrument
-    path('instruments/show/<int:pk>', views.instrument_by_pk, name='instrument'),
-    path('instruments/show/<str:symbol>', views.instrument_by_symbol, name='instrument-symbol'),
-    path('instruments/add', views.add_instruments, name='add-instrument'),
-    path('instruments', views.list_instruments, name='list-instruments'),
-
+    path("instruments/show/<int:pk>", views.instrument_by_pk, name="instrument"),
+    path(
+        "instruments/show/<str:symbol>",
+        views.instrument_by_symbol,
+        name="instrument-symbol",
+    ),
+    path("instruments/add", views.add_instruments, name="add-instrument"),
+    path("instruments", views.list_instruments, name="list-instruments"),
     # Zerodha
-    path('zerodha_login_url', views.zerodha_login_url, name='zerodha-login-url'),
-    path('zerodha_req_token', views.zerodha_req_token, name='zerodha-req-token'),
-    path('zerodha_instruments', views.zerodha_instruments),
+    path("zerodha_login_url", views.zerodha_login_url, name="zerodha-login-url"),
+    path("zerodha_req_token", views.zerodha_req_token, name="zerodha-req-token"),
+    path("zerodha_instruments", views.zerodha_instruments),
+    # Trading System
+    path(
+        "trading_system/place_options_call",
+        views.place_options_call,
+        name="place-options-call",
+    ),
+    path("trading_system/calls/<int:pk>", views.trading_signal, name="trading-signal"),
+    path("trading_system/calls/options", views.options_calls, name="options-calls"),
 ]

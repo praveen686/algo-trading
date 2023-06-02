@@ -1,10 +1,10 @@
 {% load static %}
 
 <div class="table-responsive">
-  <table class="instruments-list table rounded table-striped border gy-7 gs-7">
+  <table class="instruments-list table gy-5 gs-5 align-middle">
     <thead>
-      <tr>
-        <th>#</th>
+      <tr class="fw-bold text-muted bg-light">
+        <th class="ps-4 rounded-start min-w-25px">#</th>
         <th>Symbol</th>
         <th>Name</th>
         <th>Exchange</th>
@@ -15,7 +15,7 @@
         <th>Tick Size</th>
         <th>Strike</th>
         <th>Exchange Token</th>
-        <th>Instrument Token</th>
+        <th class="text-end rounded-end">Instrument Token</th>
       </tr>
     </thead>
 
@@ -37,7 +37,7 @@
           <td>{{ instrument.tick_size }}</td>
           <td>{{ instrument.strike }}</td>
           <td>{{ instrument.exchange_token }}</td>
-          <td>{{ instrument.instrument_token }}</td>
+          <td class="text-end">{{ instrument.instrument_token }}</td>
         </tr>
       {% endfor %}
     </tbody>

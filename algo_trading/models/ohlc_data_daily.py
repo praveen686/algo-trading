@@ -1,4 +1,5 @@
 from django.db import models
+
 from .instruments import Instrument
 
 
@@ -14,7 +15,9 @@ class OhlcDataDaily(models.Model):
     close = models.DecimalField("close price", max_digits=15, decimal_places=5)
 
     # Set default for now, until we get this from zerodha APIs
-    last_price = models.DecimalField("last price", max_digits=15, decimal_places=5, default=0.0)
+    last_price = models.DecimalField(
+        "last price", max_digits=15, decimal_places=5, default=0.0
+    )
 
     # Refers to the instrument to which this daily data set belongs to.
     # Renames the related_name on `instrument` as `daily_data`, resulting in the following methods:
@@ -37,8 +40,10 @@ class OhlcDataDaily(models.Model):
         verbose_name_plural = "OhlcDataDailies"
 
         indexes = [
-            models.Index(fields=['date'], name="ohlcv_daily_date_idx"),
-            models.Index(fields=['instrument', 'date'], name="ohlcv_dly_instrument_date_idx"),
+            models.Index(fields=["date"], name="ohlcv_daily_date_idx"),
+            models.Index(
+                fields=["instrument", "date"], name="ohlcv_dly_instrument_date_idx"
+            ),
         ]
 
         constraints = [
@@ -46,7 +51,7 @@ class OhlcDataDaily(models.Model):
             # instrument the day/date-time should be unique and referring to the _source of truth_
             # for that timestamp.
             models.UniqueConstraint(
-                fields=['instrument', 'date'],
+                fields=["instrument", "date"],
                 name="unique_instrument_ohlcv_data_daily_date",
                 violation_error_message="Date for instrument already exists, must be unique",
             )

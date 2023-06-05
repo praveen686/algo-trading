@@ -1,6 +1,7 @@
 import math
 from decimal import Decimal
 
+from ..order import Order
 from ..trading_signal import TradingSignal
 from .funds_allocator import FundsAllocator
 from .kite_broker import KiteBroker
@@ -49,8 +50,11 @@ class OrderPlacer(metaclass=Singleton):
 
         return (last_known_ltp * trading_signal.lot_size, last_known_ltp)
 
-    def record_order_details_from_broker(self, order_id_at_broker: int) -> object:
-        return "Model Object.instance created with order_details"
+    def record_order_details_from_broker(self, order_id_at_broker: int) -> Order:
+        order_history = self.kite.order_history(order_id_at_broker)["data"]
+
+        order = Order.objects.update_details_and_history(order_history)
+        return order
 
     def install_order_updates_for(self, order_object: object) -> None:
         return "install kite listeners"

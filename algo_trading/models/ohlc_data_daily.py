@@ -4,10 +4,11 @@ from .instruments import Instrument
 
 
 class OhlcDataDaily(models.Model):
-    # REFACTOR: Create a custom field for `DecimalField`for capturing all price fields from Trading API
+    # REFACTOR: Create a custom field for `DecimalField` for capturing all
+    # price fields from Trading API
 
-    # Deliberately calling the timestamp column by a simplified name `date` as most trading APIs have
-    # date as the indicating column
+    # Deliberately calling the timestamp column by a simplified name `date`
+    # as most trading APIs have date as the indicating column
     date = models.DateTimeField("trade time")
     open = models.DecimalField("open price", max_digits=15, decimal_places=5)
     high = models.DecimalField("high price", max_digits=15, decimal_places=5)
@@ -20,7 +21,8 @@ class OhlcDataDaily(models.Model):
     )
 
     # Refers to the instrument to which this daily data set belongs to.
-    # Renames the related_name on `instrument` as `daily_data`, resulting in the following methods:
+    # Renames the related_name on `instrument` as `daily_data`,
+    # yielding following methods:
     # ```
     # instrument.daily_data.count(), instrument.daily_data.filter()
     # instrument.daily_data.add()
@@ -47,13 +49,13 @@ class OhlcDataDaily(models.Model):
         ]
 
         constraints = [
-            # Each day/date-time will have many entries for different instruments, but for each
-            # instrument the day/date-time should be unique and referring to the _source of truth_
-            # for that timestamp.
+            # Each day/date-time will have many entries for different instruments,
+            # but for each instrument the day/date-time should be unique and
+            # referring to the _source of truth_ for that timestamp.
             models.UniqueConstraint(
                 fields=["instrument", "date"],
                 name="unique_instrument_ohlcv_data_daily_date",
-                violation_error_message="Date for instrument already exists, must be unique",
+                violation_error_message="Date for instrument already exists, must be unique",  # noqa
             )
         ]
 

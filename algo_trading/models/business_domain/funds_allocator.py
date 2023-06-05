@@ -13,7 +13,7 @@ class FundsAllocator(metaclass=Singleton):
         self.kite = KiteBroker()
 
     def get_permissible_funds(self, trading_signal: TradingSignal) -> Decimal:
-        if trading_signal.options_signal:
+        if trading_signal.is_options_signal:
             allocator = OptionsFundsAllocator()
         else:
             allocator = EquityFundsAllocator()

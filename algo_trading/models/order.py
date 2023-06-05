@@ -154,6 +154,8 @@ class Order(models.Model):
     trading_signal = models.ForeignKey(
         TradingSignal,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     class Meta:
@@ -169,7 +171,7 @@ class Order(models.Model):
         ]
 
     def __str__(self):
-        return self.order_id
+        return str(self.order_id)
 
     def get_absolute_url(self):
         return reverse("order", args=[self.id])

@@ -1,9 +1,11 @@
 import logging
+from decimal import Decimal
 
 import environ
 from kiteconnect import KiteConnect
 
 from ..instruments import Instrument
+from ..trading_signal import TradingSignal
 from .singleton_maker import Singleton
 
 env = environ.Env()
@@ -88,7 +90,7 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
 
             instruments_in_exchange = self.instruments(exchange)
             logger.info(
-                f"Found {len(instruments_in_exchange)} instruments in exchange {exchange}"
+                f"Found {len(instruments_in_exchange)} instruments in exchange {exchange}"  # noqa
             )
 
             newly_created = Instrument.objects.load_bulk_instruments(
@@ -101,3 +103,30 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
             instruments_loaded.append({exchange: newly_created})
 
         return instruments_loaded
+
+    def total_available_funds(self) -> Decimal:
+        return self.margins(segment=KiteConnect.MARGIN_EQUITY)
+
+    def place_options_order(
+        self, trading_signal: TradingSignal, lots_to_take: int, last_known_ltp: Decimal
+    ) -> int:
+        """Place order at broker
+
+        Returns the order_id of the order created at Zerodha.
+        The order is not guaranteed to have been executed, need further checks
+        """
+        return self.place_order(
+            variety=KiteConnect.VARIETY_REGULAR,
+            exchange=trading_signal.instrument.exchange,
+            tradingsymbol=trading_signal.instrument.trading_symbol,
+            transaction_type=KiteConnect.TRANSACTION_TYPE_BUY,
+            quantity=lots_to_take,
+            product=KiteConnect.PRODUCT_NRML,
+            order_type=KiteConnect.ORDER_TYPE_LIMIT,
+            price=last_known_ltp,
+        )
+
+    def last_known_ltp(self, broker_symbol: str) -> Decimal:
+        response = self.ltp([broker_symbol])
+
+        return response[broker_symbol]["last_price"]

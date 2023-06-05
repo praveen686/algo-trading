@@ -96,6 +96,7 @@ class TradingSignal(models.Model):
     instrument = models.ForeignKey(
         Instrument,
         on_delete=models.CASCADE,
+        related_name="trading_signal",
     )
 
     class Meta:
@@ -131,3 +132,10 @@ class TradingSignal(models.Model):
     @property
     def signal_time_for_display(self) -> str:
         return self.created_at.strftime("%B %d, %Y")
+
+    def is_options_signal(self):
+        return (
+            self.instrument_type
+            == Instrument.InstrumentType.CALL_OPTION | self.instrument_type
+            == Instrument.InstrumentType.PUT_OPTION
+        )

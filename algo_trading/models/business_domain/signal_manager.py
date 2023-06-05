@@ -58,8 +58,8 @@ class SignalManager(metaclass=Singleton):
 
         instrument = Instrument.objects.get_options_from_symbol(instrument_name)
 
-        signal = self.create(
-            signal_type=self.model.TradingSignalType.BUY,
+        signal = TradingSignal.objects.create(
+            signal_type=TradingSignal.TradingSignalType.BUY,
             instrument_type=option_type,
             entry_point=entry_point,
             stoploss_point=stoploss_point,

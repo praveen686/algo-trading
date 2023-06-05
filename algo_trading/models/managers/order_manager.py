@@ -10,12 +10,15 @@ class OrderManager(models.Manager):
     def update_details_and_history(
         self, order_history: list[dict], trading_signal: TradingSignal
     ):
+        print("-------- in OrderManager#update_details_and_history")
         order = self.create_order_with_first_history(order_history[0], trading_signal)
-
+        print(f"-------- order created= {order}")
         for history_item in order_history:
-            OrderHistory.objects.create_history_objects_from_broker_data(
+            print(f"------- creating history item {history_item}")
+            oh = OrderHistory.objects.create_history_objects_from_broker_data(
                 order, history_item
             )
+            print(f"-------- created history item {oh}")
 
         return order
 
@@ -45,7 +48,9 @@ class OrderManager(models.Manager):
         ]
 
         order_payload = {k: order_data[k] for k in required_fields_from_payload}
+        print(f"------- order_payload= {order_payload}")
 
         order = self.create(**order_payload)
+        print(f"------- created order {order}")
 
         return order

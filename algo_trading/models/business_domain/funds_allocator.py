@@ -23,21 +23,22 @@ class FundsAllocator(metaclass=Singleton):
 
 class OptionsFundsAllocator(metaclass=Singleton):
     def get_permissible_funds(self, trading_signal: TradingSignal) -> Decimal:
-        total_available_funds = self.kite.total_available_funds()
+        kite = KiteBroker()
+        total_available_funds = kite.total_available_funds()["available"]["cash"]
 
         funds_for_options = self.funds_for_options(total_available_funds)
 
         # to be calculated from previous trades
-        average_margin_per_lot = 20000.00
-        max_total_options_lots_possible = math.floor(
-            funds_for_options / average_margin_per_lot
-        )
+        # average_margin_per_lot = 20000.00
+        # max_total_options_lots_possible = math.floor(
+        #     funds_for_options / average_margin_per_lot
+        # )
 
         # to be calculated based on average closing time for each trade
-        max_trades_to_support = 6
+        max_trades_to_support = 4
 
         available_funds_per_trade = math.floor(
-            max_total_options_lots_possible / max_trades_to_support
+            funds_for_options / max_trades_to_support
         )
 
         return available_funds_per_trade

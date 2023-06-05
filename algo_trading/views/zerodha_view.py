@@ -41,6 +41,7 @@ def zerodha_req_token(request):
 
     data = kite.create_session(zerodha_request_token)
     kite.set_access_token(data["access_token"])
+    print(f"******* KAT = {data['access_token']}")
     kite.set_refresh_token(data["refresh_token"])
 
     return redirect(request.GET.get("redirect_to"))

@@ -1,6 +1,5 @@
 import logging
 
-from ..trading_signal import TradingSignal
 from .order_placer import OrderPlacer
 from .signal_manager import SignalManager
 from .singleton_maker import Singleton
@@ -34,6 +33,3 @@ class TradingSystem(metaclass=Singleton):
         self.order_placer.process_signal(trading_signal)
 
         return trading_signal
-
-    def process_signal(self, trading_signal: TradingSignal):
-        return "ok"

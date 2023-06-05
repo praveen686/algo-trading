@@ -118,10 +118,15 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
         return self.place_order(
             variety=KiteConnect.VARIETY_REGULAR,
             exchange=trading_signal.instrument.exchange,
-            tradingsymbol=trading_signal.trading_symbol,
+            tradingsymbol=trading_signal.instrument.trading_symbol,
             transaction_type=KiteConnect.TRANSACTION_TYPE_BUY,
             quantity=lots_to_take,
             product=KiteConnect.PRODUCT_NRML,
             order_type=KiteConnect.ORDER_TYPE_LIMIT,
-            price=last_known_ltp + (trading_signal.instrument.tick_size * 1),
+            price=last_known_ltp,
         )
+
+    def last_known_ltp(self, broker_symbol: str) -> Decimal:
+        response = self.ltp([broker_symbol])
+
+        return response[broker_symbol]["last_price"]

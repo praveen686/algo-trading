@@ -27,6 +27,7 @@ class OrderHistory(models.Model):
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
+        related_name="order_history",
     )
 
     class Meta:

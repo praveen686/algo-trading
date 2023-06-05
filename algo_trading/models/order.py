@@ -8,10 +8,10 @@ from .trading_signal import TradingSignal
 class Order(models.Model):
     trading_symbol = models.CharField("trading symbol", max_length=100, default="")
     exchange = models.CharField("zerdoha exchange", max_length=50, default="")
-    order_id = models.IntegerField(
+    order_id = models.BigIntegerField(
         "zerodha order id", default=None, blank=True, null=True
     )
-    exchange_order_id = models.IntegerField(
+    exchange_order_id = models.BigIntegerField(
         "exchange order id", default=None, blank=True, null=True
     )
 
@@ -151,9 +151,10 @@ class Order(models.Model):
         default=OrderStatusChoices.PUT_ORDER_REQ_RECEIVED,
     )
 
-    trading_signal = models.ForeignKey(
+    trading_signal = models.OneToOneField(
         TradingSignal,
         on_delete=models.CASCADE,
+        related_name="trading_signal",
         null=True,
         blank=True,
     )

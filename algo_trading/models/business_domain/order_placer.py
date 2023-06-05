@@ -24,7 +24,9 @@ class OrderPlacer(metaclass=Singleton):
 
         order_id_at_broker = self.place_options_order_at_broker(trading_signal)
 
-        order_object = self.record_order_details_from_broker(order_id_at_broker)
+        order_object = self.record_order_details_from_broker(
+            order_id_at_broker, trading_signal
+        )
 
         self.install_order_updates_for(order_object)
 
@@ -50,10 +52,12 @@ class OrderPlacer(metaclass=Singleton):
 
         return (last_known_ltp * trading_signal.lot_size, last_known_ltp)
 
-    def record_order_details_from_broker(self, order_id_at_broker: int) -> Order:
+    def record_order_details_from_broker(
+        self, order_id_at_broker: int, trading_signal: TradingSignal
+    ) -> Order:
         order_history = self.kite.order_history(order_id_at_broker)["data"]
 
-        order = Order.objects.update_details_and_history(order_history)
+        order = Order.objects.update_details_and_history(order_history, trading_signal)
         return order
 
     def install_order_updates_for(self, order_object: object) -> None:

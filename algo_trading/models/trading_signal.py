@@ -96,6 +96,7 @@ class TradingSignal(models.Model):
     instrument = models.ForeignKey(
         Instrument,
         on_delete=models.CASCADE,
+        related_name="trading_signal",
     )
 
     class Meta:

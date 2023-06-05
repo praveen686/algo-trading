@@ -1,6 +1,8 @@
 import logging
 
 from ..trading_signal import TradingSignal
+from .order_placer import OrderPlacer
+from .signal_manager import SignalManager
 from .singleton_maker import Singleton
 
 logger = logging.getLogger(__name__)
@@ -19,13 +21,19 @@ class TradingSystem(metaclass=Singleton):
 
     """
 
+    def __init__(self):
+        self.order_placer = OrderPlacer()
+        self.signal_manager = SignalManager()
+
     strategies_manager: object = None
-    order_manager: object = None
-    funds_manager: object = None
+    order_placer: OrderPlacer = None
+    signal_manager: SignalManager = None
 
     def place_order_from_call_blob(self, call_blob):
-        signal_object = TradingSignal.objects.create_from_call_blob(call_blob)
-        return signal_object
+        trading_signal = self.signal_manager.create_options_signal_from_call(call_blob)
+        self.order_placer.process_signal(trading_signal)
+
+        return trading_signal
 
     def process_signal(self, trading_signal: TradingSignal):
         return "ok"

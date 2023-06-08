@@ -29,6 +29,20 @@ class TradingSystem(metaclass=Singleton):
     signal_manager: SignalManager = None
 
     def place_order_from_call_blob(self, call_blob):
+        """
+        Places an order based on a call blob and returns the trading signal.
+
+        Args:
+            call_blob (CallBlob): The call blob for creating the options signal.
+
+        Returns:
+            TradingSignal: The generated trading signal.
+
+        Description:
+        - Converts the call blob into an options signal using the signal manager.
+        - Processes the trading signal using the order placer.
+        - Returns the generated trading signal.
+        """
         trading_signal = self.signal_manager.create_options_signal_from_call(call_blob)
         self.order_placer.process_signal(trading_signal)
 

@@ -23,6 +23,29 @@ class FundsAllocator(metaclass=Singleton):
 
 class OptionsFundsAllocator(metaclass=Singleton):
     def get_permissible_funds(self, trading_signal: TradingSignal) -> Decimal:
+        """
+        Calculates the permissible funds available for trading.
+
+        Args:
+            trading_signal (TradingSignal): The trading signal associated with order.
+
+        Returns:
+            Decimal: The permissible funds for trading.
+
+        Description:
+        - Retrieves the total available funds from the Kite broker.
+        - Calculates the funds available for options trading based on the
+        total available funds.
+        - Determines the maximum number of trades the funds can support.
+        - Calculates the available funds per trade based on the maximum number of trades
+        - Returns the available funds per trade.
+
+        Note:
+        - The calculation of average margin per lot and max total options lots
+        possible are commented out.
+        - The calculation of max trades to support is based on a predefined value of 4.
+        """
+
         kite = KiteBroker()
         total_available_funds = kite.total_available_funds()["available"]["cash"]
 

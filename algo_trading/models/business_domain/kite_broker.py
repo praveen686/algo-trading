@@ -114,7 +114,36 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
 
         Returns the order_id of the order created at Zerodha.
         The order is not guaranteed to have been executed, need further checks
+
+        Args:
+            trading_signal (TradingSignal): the signal for which to place the
+                options order
+            lots_to_take (int): The no of lots to take for the option
+            last_known_ltp (decimal): last LTP known and used here as the ask price
+                for the BUY order/offer price for the SELL order.
+        Note: If order gets executed at the last LTP, we get a quick entry at the
+            cheapest price. If it does not, we chase it with the price until it
+            gets placed.
+
+        Returns:
+            zerodha_order_id: int
+                The order id of the order that was created by this call
+
+        Exceptions:
+            Handled:
+                InputException (zerodha): If some wrong param was passed.
+            Response:
+                Emit a failure event with all details against this order
+                Return a known exception (possibly the same) to the consumer with
+                a message for display if required.
+            Handled:
+                ApiException (zerodha): If API request fails due to network error
+            Response:
+                Emit a failure event with all error details
+                Return a known exception (possibly the same) to the consumer
+
         """
+
         return self.place_order(
             variety=KiteConnect.VARIETY_REGULAR,
             exchange=trading_signal.instrument.exchange,
@@ -127,6 +156,18 @@ class KiteBroker(KiteConnect, metaclass=Singleton):
         )
 
     def last_known_ltp(self, broker_symbol: str) -> Decimal:
+        """
+        Fetches the ltp for a given broker symbol. Prefixed with last_known_ to indicate
+        that the LTP may have changed since it was fetched via this very method call.
+
+        Args:
+            broker_symbol (str): The symbol of the broker in the format
+                exchange:trading_symbol, like NSE:INFY or NFO:ZEEL23JUN20231400CE
+
+        Returns:
+            the LTP at the moment of this call in decimal.
+        """
+
         response = self.ltp([broker_symbol])
 
         return response[broker_symbol]["last_price"]

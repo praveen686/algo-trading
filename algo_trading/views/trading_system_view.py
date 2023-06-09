@@ -19,6 +19,10 @@ def place_options_call(request):
     ------
     Error404 if the requested instrument does not exist in the list of instruments
     to trade from the daily zerodha import.
+
+    Redirects to
+    ------------
+    Created trading Signal page, which will also have the order object.
     """
 
     # @TODO
@@ -31,7 +35,7 @@ def place_options_call(request):
         options_call_form = OptionsCallForm(request.POST)
 
         if options_call_form.is_valid():
-            trading_signal = ts.place_order_from_call_blob(
+            (trading_signal, order) = ts.place_order_from_call_blob(
                 options_call_form.cleaned_data["call_blob"]
             )
             return redirect(trading_signal)

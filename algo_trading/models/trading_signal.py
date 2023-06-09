@@ -139,3 +139,6 @@ class TradingSignal(models.Model):
             == Instrument.InstrumentType.CALL_OPTION | self.instrument_type
             == Instrument.InstrumentType.PUT_OPTION
         )
+
+    def symbol_for_broker_query(self):
+        return f"{self.instrument.exchange}:{self.instrument.trading_symbol}"

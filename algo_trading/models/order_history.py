@@ -1,5 +1,6 @@
 from django.db import models
 
+from .managers.order_history_manager import OrderHistoryManager
 from .order import Order
 
 
@@ -23,7 +24,13 @@ class OrderHistory(models.Model):
         null=True,
         blank=True,
     )
-    status_message = models.CharField("status change message", max_length=200)
+    status_message = models.CharField(
+        "status change message",
+        max_length=200,
+        default=None,
+        null=True,
+        blank=True,
+    )
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
@@ -41,3 +48,5 @@ class OrderHistory(models.Model):
 
     def __str__(self):
         return f"Status changed to {self.status} at {self.timestamp}"
+
+    objects = OrderHistoryManager()

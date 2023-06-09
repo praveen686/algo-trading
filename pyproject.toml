@@ -8,3 +8,7 @@ extend-ignore = "E203"
 
 [tool.ruff]
 exclude = ["algo_trading/migrations", "algo_trading/models/__init__.py"]
+
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "algo_trading.settings.development"

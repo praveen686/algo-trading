@@ -43,3 +43,6 @@ urlpatterns = [
     path("trading_system/calls/<int:pk>", views.trading_signal, name="trading-signal"),
     path("trading_system/calls/options", views.options_calls, name="options-calls"),
 ]
+
+# Additional URLs from other apps
+urlpatterns += [path("silk/", include("silk.urls", namespace="silk"))]

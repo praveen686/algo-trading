@@ -29,4 +29,6 @@ repos:
         # Indent only HTML files in template directories
         files: .*/templates/.*\.html$
       - id: djcss
+        exclude: .*static/.*
       - id: djjs
+        exclude: .*static/.*

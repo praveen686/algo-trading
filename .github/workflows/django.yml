@@ -49,9 +49,4 @@ jobs:
         # These are stored in GH repo/settings/env var's
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      run: python manage.py migrate
-    - name: Tests with pytest
-      env:
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: pytest

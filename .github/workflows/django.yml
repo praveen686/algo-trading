@@ -20,8 +20,12 @@ jobs:
           POSTGRES_DB: github_actions
         ports:
           - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
 
     strategy:
       max-parallel: 4
@@ -29,7 +33,9 @@ jobs:
         python-version: [3.9]
 
     steps:
-    - uses: actions/checkout@v3
+    # Downloads a copy of the code in your repository before running CI tests
+    - name: Check out repo code
+      uses: actions/checkout@v3
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v4
       with:
@@ -40,6 +46,7 @@ jobs:
         pip install -r requirements.txt
     - name: Run migrations
       env:
+        # These are stored in GH repo/settings/env var's
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
       run: python manage.py migrate
@@ -47,5 +54,4 @@ jobs:
       env:
         SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
-      run: |
-        pytest
+      run: pytest

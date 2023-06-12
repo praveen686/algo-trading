@@ -25,6 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 INSTALLED_APPS = [
     "algo_trading",
+    "silk",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -44,6 +45,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "silk.middleware.SilkyMiddleware",
 ]
 
 ROOT_URLCONF = "algo_trading.urls"
@@ -109,3 +111,16 @@ STATIC_ROOT = "static"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+# Additional settings from apps
+
+# Turn on the SILKY_PYTHON_PROFILER setting to use Python's built-in cProfile profiler.
+# Each request will be separately profiled and the profiler's output will be available
+# on the request's Profiling page in the Silk UI.
+SILKY_PYTHON_PROFILER = True
+# Useful to be able to see what effect Silk is having on the request/response time.
+SILKY_META = True
+# To make sure silky garbage collects old request/response data, a config var
+# can be set to limit the number of request/response rows it stores.
+SILKY_MAX_RECORDED_REQUESTS = 10**4

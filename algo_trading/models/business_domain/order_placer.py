@@ -44,14 +44,14 @@ class OrderPlacer(metaclass=Singleton):
         self.funds_allocator = FundsAllocator()
         self.kite = KiteBroker()
 
-    def process_signal(self, trading_signal: TradingSignal) -> None:
+    def process_signal(self, trading_signal: TradingSignal) -> int:
         """Process a trading signal and return the order ID.
 
         Args:
             trading_signal (TradingSignal): The trading signal to be processed.
 
         Returns:
-            None
+            int: The ID of the order object.
 
         Description:
         - Processes the given trading signal.
@@ -63,16 +63,12 @@ class OrderPlacer(metaclass=Singleton):
         """
 
         order_id_at_broker = self.place_options_order_at_broker(trading_signal)
-        print(f"------- order_id_at_broker: {order_id_at_broker}")
 
         order_object = self.record_order_details_from_broker(
             order_id_at_broker, trading_signal
         )
-        print(f"------- order_object= {order_object}")
 
         self.install_order_updates_for(order_object)
-
-        self.update_objects_with_order_details(trading_signal, order_object)
 
         return order_object.id
 
@@ -106,7 +102,9 @@ class OrderPlacer(metaclass=Singleton):
             trading_signal, lots_to_take, last_known_ltp
         )
 
-    def get_ltp_and_margin_per_lot(self, trading_signal: TradingSignal) -> Decimal:
+    def get_ltp_and_margin_per_lot(
+        self, trading_signal: TradingSignal
+    ) -> tuple([Decimal, Decimal]):
         """Get the Last Traded Price (LTP) and margin per lot.
 
         Args:
@@ -114,7 +112,7 @@ class OrderPlacer(metaclass=Singleton):
             and lot size information.
 
         Returns:
-            Decimal: The margin required per lot.
+            tuple([Decimal, Decimal]): (The margin required per lot, Last known LTP)
 
         Description:
         - Retrieves the Last Traded Price (LTP) and margin required per lot.
@@ -144,11 +142,11 @@ class OrderPlacer(metaclass=Singleton):
         Description:
         - Retrieves the order history from the broker using the order ID.
         - Updates the order details and history using
-        Order.objects.create_order_and_record_history() method.
+            Order.objects.create_order_and_record_history() method.
         - Returns the updated Order object.
         """
 
-        order_history = self.kite.order_history(order_id_at_broker)["data"]
+        order_history = self.kite.order_history(order_id_at_broker)
 
         order = Order.objects.create_order_and_record_history(
             order_history, trading_signal
@@ -156,9 +154,17 @@ class OrderPlacer(metaclass=Singleton):
         return order
 
     def install_order_updates_for(self, order_object: Order) -> None:
-        return "install kite listeners"
+        """Install order updates for the given Order object.
 
-    def update_objects_with_order_details(
-        self, trading_signal: TradingSignal, order_object: Order
-    ) -> None:
-        return "update Tsig status, attach order to Tsig"
+        Args:
+            order_object (Order): The Order object to install updates for.
+
+        Returns:
+            None
+
+        Description:
+        - Installs the necessary listeners or mechanisms to receive order updates
+          for the given Order object.
+        """
+
+        return "install kite listeners"

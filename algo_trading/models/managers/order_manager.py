@@ -1,8 +1,6 @@
 from django.db import models
-from django.utils.dateparse import parse_datetime
 from django.utils.timezone import make_aware
 
-from ..order_history import OrderHistory
 from ..trading_signal import TradingSignal
 
 
@@ -31,19 +29,18 @@ class OrderManager(models.Manager):
         Note:
         - This method assumes that the order history list is ordered chronologically.
         """
-        print("-------- in OrderManager#create_order_and_record_history")
-        order = self.create_order_with_first_history(order_history[0], trading_signal)
-        print(f"-------- order created= {order}")
+        order = self.create_order_with_first_history_item(
+            order_history[0], trading_signal
+        )
+
         for history_item in order_history:
-            print(f"------- creating history item {history_item}")
-            oh = OrderHistory.objects.create_history_objects_from_broker_data(
-                order, history_item
-            )
-            print(f"-------- created history item {oh}")
+            payload = self.get_history_fields_from_broker_data(history_item)
+
+            order.order_history.create(**payload)
 
         return order
 
-    def create_order_with_first_history(
+    def create_order_with_first_history_item(
         self, order_data: dict, trading_signal: TradingSignal
     ):
         """
@@ -66,10 +63,9 @@ class OrderManager(models.Manager):
         - Creates an order with the extracted order payload using the `create` method.
         - Returns the created order.
         """
+
         order_data["trading_symbol"] = order_data.pop("tradingsymbol")
-        order_data["placed_at"] = make_aware(
-            parse_datetime(order_data.pop("order_timestamp"))
-        )
+        order_data["placed_at"] = make_aware(order_data["order_timestamp"])
         order_data["product_type"] = order_data.pop("product")
         order_data["trading_signal"] = trading_signal
 
@@ -89,9 +85,23 @@ class OrderManager(models.Manager):
         ]
 
         order_payload = {k: order_data[k] for k in required_fields_from_payload}
-        print(f"------- order_payload= {order_payload}")
 
         order = self.create(**order_payload)
-        print(f"------- created order {order}")
 
         return order
+
+    def get_history_fields_from_broker_data(self, history_item):
+        history_item["timestamp"] = make_aware(history_item["order_timestamp"])
+
+        required_fields_from_payload = [
+            "timestamp",
+            "cancelled_quantity",
+            "filled_quantity",
+            "pending_quantity",
+            "status",
+            "status_message",
+        ]
+
+        payload = {k: history_item[k] for k in required_fields_from_payload}
+
+        return payload

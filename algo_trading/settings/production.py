@@ -12,7 +12,12 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["malgotrading.com", "www.malgotrading.com", "172.31.8.67"]
+ALLOWED_HOSTS = [
+    "malgotrading.com",
+    "www.malgotrading.com",
+    "172.31.8.67",
+    "172.31.33.97",
+]
 
 if "RDS_HOSTNAME" in os.environ:  # noqa
     DATABASES = {

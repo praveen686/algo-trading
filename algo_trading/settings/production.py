@@ -17,6 +17,7 @@ ALLOWED_HOSTS = [
     "www.malgotrading.com",
     "172.31.8.67",
     "172.31.33.97",
+    "122.172.80.32",
 ]
 
 if "RDS_HOSTNAME" in os.environ:  # noqa

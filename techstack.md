@@ -40,7 +40,7 @@ Full tech stack [here](/techstack.md)
 # Tech Stack File
 ![](https://img.stackshare.io/repo.svg "repo") [i-arindam/algo-trading](https://github.com/i-arindam/algo-trading)![](https://img.stackshare.io/public_badge.svg "public")
 <br/><br/>
-|100<br/>Tools used|12/13/23 <br/>Report generated|
+|100<br/>Tools used|01/05/24 <br/>Report generated|
 |------|------|
 </div>
 
@@ -229,7 +229,7 @@ Full tech stack [here](/techstack.md)
 |[nodeenv](https://pypi.org/project/nodeenv)|v1.8.0|05/31/23|Arindam Chakraborty |BSD-3-Clause|N/A|
 |[packaging](https://pypi.org/project/packaging)|v23.1|05/31/23|Arindam Chakraborty |BSD-3-Clause,Apache-2.0|N/A|
 |[pandas](https://pypi.org/project/pandas)|v1.5.3|03/30/23|Arindam Chakraborty |BSD-3-Clause|N/A|
-|[paramiko](https://pypi.org/project/paramiko)|v3.1.0|05/10/23|Arindam Chakraborty |LGPL-2.1|N/A|
+|[paramiko](https://pypi.org/project/paramiko)|v3.1.0|05/10/23|Arindam Chakraborty |LGPL-2.1|[CVE-2023-48795](https://github.com/advisories/GHSA-45x7-px36-x8w8) (Moderate)|
 |[pathspec](https://pypi.org/project/pathspec)|v0.10.1|05/10/23|Arindam Chakraborty |MPL-2.0|N/A|
 |[pluggy](https://pypi.org/project/pluggy)|v1.0.0|06/09/23|Arindam Chakraborty |MIT|N/A|
 |[pre-commit](https://pypi.org/project/pre-commit)|v3.3.2|05/31/23|Arindam Chakraborty |MIT|N/A|
